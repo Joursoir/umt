@@ -10,7 +10,15 @@ typedef struct {
   /// Base address of graphics linear frame buffer.
   /// Starts from the upper left pixel.
   ///
-  UINT8                                   *Base;
+  UINT8                                   *FrontBuffer;
+  ///
+  /// Pointer to allocated memory. Secondary linear buffer.
+  ///
+  UINT8                                   *BackBuffer;
+  ///
+  /// Amount of frame buffer needed to support the active mode.
+  ///
+  UINTN                                   BufferSize;
   ///
   /// The size of video screen in pixels in the X dimension.
   ///

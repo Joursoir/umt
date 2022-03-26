@@ -23,7 +23,10 @@ PrepareGraphicsInfo (
   ASSERT (Gop != NULL);
 
   Graphics->Gop         = Gop;
-  Graphics->Base        = (UINT8 *)Gop->Mode->FrameBufferBase;
+  Graphics->FrontBuffer = (UINT8 *)Gop->Mode->FrameBufferBase;
+  Graphics->BufferSize  = Gop->Mode->FrameBufferSize;
+  Graphics->BackBuffer  = AllocateCopyPool (Graphics->BufferSize, Graphics->FrontBuffer);
+  ASSERT (Graphics->BackBuffer != NULL);
   Graphics->Width       = Gop->Mode->Info->HorizontalResolution;
   Graphics->Height      = Gop->Mode->Info->VerticalResolution;
   Graphics->PixelWidth  = 4; // A pixel is 32-bits
@@ -44,6 +47,18 @@ PrepareGraphicsInfo (
 }
 
 STATIC
+VOID
+ForgetGraphicsInfo (
+  IN GRAPHICS_CONTEXT *Graphics
+  )
+{
+  ASSERT (Graphics != NULL);
+
+  // Should we zero all the data structure?
+
+  FreePool (Graphics->BackBuffer);
+}
+
 EFI_GRAPHICS_OUTPUT_PROTOCOL *
 GetGraphicsOutputProtocol (
   VOID
@@ -99,6 +114,10 @@ UefiMain (
   }
 
   PrepareGraphicsInfo (&Graphics, Gop);
+
+  
+
+  ForgetGraphicsInfo (&Graphics);
 
   return EFI_SUCCESS;
 }
