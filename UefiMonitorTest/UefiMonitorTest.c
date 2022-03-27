@@ -12,6 +12,14 @@
 
 #include "UefiMonitorTest.h"
 
+CONST EFI_PIXEL_BITMASK mRgbPixelMasks = {
+  0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
+};
+
+CONST EFI_PIXEL_BITMASK mBgrPixelMasks = {
+  0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000
+};
+
 STATIC
 VOID
 PrepareGraphicsInfo (
@@ -19,8 +27,48 @@ PrepareGraphicsInfo (
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL *Gop
   )
 {
+  CONST EFI_PIXEL_BITMASK  *BitMask;
+  UINT32                   PixelWidth;
+  INT8                     PixelShl[4];
+  INT8                     PixelShr[4];
+
   ASSERT (Graphics != NULL);
   ASSERT (Gop != NULL);
+
+  switch (Gop->Mode->Info->PixelFormat) {
+    case PixelRedGreenBlueReserved8BitPerColor:
+      BitMask = &mRgbPixelMasks;
+      break;
+
+    case PixelBlueGreenRedReserved8BitPerColor:
+      BitMask = &mBgrPixelMasks;
+      break;
+
+    case PixelBitMask:
+      BitMask = &Gop->Mode->Info->PixelInformation;
+      break;
+
+    case PixelBltOnly:
+      ASSERT (FALSE);
+      //return RETURN_UNSUPPORTED;
+
+    default:
+      ASSERT (FALSE);
+      // return RETURN_INVALID_PARAMETER;
+  }
+
+  DEBUG ((
+    DEBUG_INFO,
+    "GOP information:\n"
+    "Mode: %d\n"
+    "Framebuffer address, size: %x, %d\n"
+    "Screen width x height: %d x %d\n",
+    Gop->Mode->Mode,
+    Gop->Mode->FrameBufferBase, Gop->Mode->FrameBufferSize,
+    Gop->Mode->Info->HorizontalResolution, Gop->Mode->Info->VerticalResolution
+    ));
+
+  ParseGraphicsPixelFormat (BitMask, &PixelWidth, PixelShl, PixelShr);
 
   Graphics->Gop         = Gop;
   Graphics->FrontBuffer = (UINT8 *)Gop->Mode->FrameBufferBase;
@@ -29,21 +77,11 @@ PrepareGraphicsInfo (
   ASSERT (Graphics->BackBuffer != NULL);
   Graphics->Width       = Gop->Mode->Info->HorizontalResolution;
   Graphics->Height      = Gop->Mode->Info->VerticalResolution;
-  Graphics->PixelWidth  = 4; // A pixel is 32-bits
+  CopyMem (&Graphics->PixelMasks, BitMask, sizeof (*BitMask));
+  CopyMem (Graphics->PixelShl, PixelShl, sizeof (PixelShl));
+  CopyMem (Graphics->PixelShr, PixelShr, sizeof (PixelShr));
+  Graphics->PixelWidth  = PixelWidth;
   Graphics->Pitch       = Graphics->PixelWidth * Gop->Mode->Info->PixelsPerScanLine;
-
-  DEBUG ((
-    DEBUG_INFO,
-    "GOP information:\n"
-    "Mode: %d\n"
-    "Support a physical frame buffer: %s\n"
-    "Framebuffer address, size: %x, %d\n"
-    "Screen width x height: %d x %d\n",
-    Gop->Mode->Mode,
-    (Gop->Mode->Info->PixelFormat == PixelBltOnly) ? L"NO" : L"YES",
-    Gop->Mode->FrameBufferBase, Gop->Mode->FrameBufferSize,
-    Gop->Mode->Info->HorizontalResolution, Gop->Mode->Info->VerticalResolution
-    ));
 }
 
 STATIC

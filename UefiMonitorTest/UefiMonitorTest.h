@@ -28,6 +28,20 @@ typedef struct {
   ///
   UINT32                                  Height;
   ///
+  /// Bit-mask defines what bits are used for different colors.
+  ///
+  EFI_PIXEL_BITMASK                       PixelMasks;
+  ///
+  /// Amount of bits to shift left.
+  /// R-G-B-Rsvd
+  ///
+  INT8                                    PixelShl[4];
+  ///
+  /// Amount of bits to shift right.
+  /// R-G-B-Rsvd
+  ///
+  INT8                                    PixelShr[4];
+  ///
   /// The size of pixel color in bytes.
   ///
   UINT32                                  PixelWidth;
