@@ -22,6 +22,51 @@ CONST EFI_PIXEL_BITMASK mBgrPixelMasks = {
 
 STATIC
 VOID
+ParseGraphicsPixelFormat (
+  IN CONST EFI_PIXEL_BITMASK  *BitMask,
+  OUT UINT32                  *PixelWidth,
+  OUT INT8                    *PixelShl,
+  OUT INT8                    *PixelShr
+  )
+{
+  UINT8   Index;
+  UINT32  *Masks;
+  UINT32  MergedMasks;
+
+  MergedMasks = 0;
+  Masks       = (UINT32 *)BitMask;
+  for (Index = 0; Index < 3; Index++) {
+    ASSERT ((MergedMasks & Masks[Index]) == 0);
+
+    PixelShl[Index] = (INT8)HighBitSet32 (Masks[Index]) - 23 + (Index * 8);
+    if (PixelShl[Index] < 0) {
+      PixelShr[Index] = -PixelShl[Index];
+      PixelShl[Index] = 0;
+    } else {
+      PixelShr[Index] = 0;
+    }
+
+    DEBUG ((
+      DEBUG_INFO,
+      "Index %d: shl:%d shr:%d mask:%08x\n",
+      Index,
+      PixelShl[Index],
+      PixelShr[Index],
+      Masks[Index]
+      ));
+
+    MergedMasks = (UINT32)(MergedMasks | Masks[Index]);
+  }
+
+  MergedMasks = (UINT32)(MergedMasks | Masks[3]);
+
+  ASSERT (MergedMasks != 0);
+  *PixelWidth = (UINT32)((HighBitSet32 (MergedMasks) + 7) / 8);
+  DEBUG ((DEBUG_INFO, "Bytes per pixel: %d\n", *PixelWidth));
+}
+
+STATIC
+VOID
 PrepareGraphicsInfo (
   IN GRAPHICS_CONTEXT             *Graphics,
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL *Gop
