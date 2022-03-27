@@ -2,6 +2,13 @@
 #define UEFI_MONITOR_TEST_H
 
 typedef struct {
+  UINT8 Blue;
+  UINT8 Green;
+  UINT8 Red;
+  UINT8 Reserved;
+} GRAPHICS_PIXEL_COLOR;
+
+typedef struct {
   ///
   /// The EFI_GRAPHICS_OUTPUT_PROTOCOL instance.
   ///
