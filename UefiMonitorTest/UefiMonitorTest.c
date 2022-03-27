@@ -180,6 +180,33 @@ GetGraphicsOutputProtocol (
   return Gop;
 }
 
+STATIC
+VOID
+PutPixel (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X,
+  IN UINTN              Y,
+  GRAPHICS_PIXEL_COLOR  *Color
+  )
+{
+  UINT32 *Buffer;
+  UINT32 Ucolor;
+
+  ASSERT (X >= 0 && X <= Graphics->Width);
+  ASSERT (Y >= 0 && Y <= Graphics->Height);
+
+  Buffer  = (UINT32 *)(Graphics->BackBuffer + (X * Graphics->PixelWidth) + (Y * Graphics->Pitch));
+  Ucolor  = *(UINT32 *)Color;
+  *Buffer = (UINT32)(
+             (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) &
+              Graphics->PixelMasks.RedMask) |
+             (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) &
+              Graphics->PixelMasks.GreenMask) |
+             (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) &
+              Graphics->PixelMasks.BlueMask)
+             );
+}
+
 EFI_STATUS
 EFIAPI
 UefiMain (
