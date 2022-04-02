@@ -12,6 +12,19 @@
 
 #include "UefiMonitorTest.h"
 
+#define GET_ICOLOR(Graphics, Ucolor)                                \
+    (UINT32)(                                                       \
+    (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) & \
+     Graphics->PixelMasks.RedMask) |                                \
+    (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) & \
+     Graphics->PixelMasks.GreenMask) |                              \
+    (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) & \
+     Graphics->PixelMasks.BlueMask)                                 \
+    )
+
+#define PUT_PUXEL(Graphics, X, Y, Icolor) \
+    Graphics->BackBuffer[X + (Y * Graphics->Pitch)] = Icolor
+
 CONST EFI_PIXEL_BITMASK mRgbPixelMasks = {
   0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
 };
@@ -179,33 +192,6 @@ GetGraphicsOutputProtocol (
 
   // TODO: free ModeInfo
   return Gop;
-}
-
-STATIC
-VOID
-PutPixel (
-  IN GRAPHICS_CONTEXT   *Graphics,
-  IN UINTN              X,
-  IN UINTN              Y,
-  GRAPHICS_PIXEL_COLOR  *Color
-  )
-{
-  UINT32 *Buffer;
-  UINT32 Ucolor;
-
-  ASSERT (X >= 0 && X <= Graphics->Width);
-  ASSERT (Y >= 0 && Y <= Graphics->Height);
-
-  Buffer  = (UINT32 *)(Graphics->BackBuffer + (X * Graphics->PixelWidth) + (Y * Graphics->Pitch));
-  Ucolor  = *(UINT32 *)Color;
-  *Buffer = (UINT32)(
-             (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) &
-              Graphics->PixelMasks.RedMask) |
-             (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) &
-              Graphics->PixelMasks.GreenMask) |
-             (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) &
-              Graphics->PixelMasks.BlueMask)
-             );
 }
 
 EFI_STATUS
