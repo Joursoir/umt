@@ -114,9 +114,10 @@ PrepareGraphicsInfo (
     ));
 
   ParseGraphicsPixelFormat (BitMask, &PixelWidth, PixelShl, PixelShr);
+  ASSERT (PixelWidth == 4);
 
   Graphics->Gop         = Gop;
-  Graphics->FrontBuffer = (UINT8 *)Gop->Mode->FrameBufferBase;
+  Graphics->FrontBuffer = (UINT32 *)Gop->Mode->FrameBufferBase;
   Graphics->BufferSize  = Gop->Mode->FrameBufferSize;
   Graphics->BackBuffer  = AllocateCopyPool (Graphics->BufferSize, Graphics->FrontBuffer);
   ASSERT (Graphics->BackBuffer != NULL);
@@ -126,7 +127,7 @@ PrepareGraphicsInfo (
   CopyMem (Graphics->PixelShl, PixelShl, sizeof (PixelShl));
   CopyMem (Graphics->PixelShr, PixelShr, sizeof (PixelShr));
   Graphics->PixelWidth  = PixelWidth;
-  Graphics->Pitch       = Graphics->PixelWidth * Gop->Mode->Info->PixelsPerScanLine;
+  Graphics->Pitch       = Gop->Mode->Info->PixelsPerScanLine;
 }
 
 STATIC
