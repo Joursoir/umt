@@ -206,7 +206,6 @@ PutPixel (
               Graphics->PixelMasks.BlueMask)
              );
 }
-
 STATIC
 VOID
 DrawLine (
