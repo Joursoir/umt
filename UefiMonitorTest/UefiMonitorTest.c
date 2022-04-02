@@ -207,6 +207,62 @@ PutPixel (
              );
 }
 
+STATIC
+VOID
+DrawRect (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X,
+  IN UINTN              Y,
+  IN UINTN              X2,
+  IN UINTN              Y2,
+  GRAPHICS_PIXEL_COLOR  *Color
+  )
+{
+  UINT32 *Buffer;
+  UINT32 Ucolor;
+  UINT32 Index;
+  UINT32 ColorB;
+
+  ASSERT (X >= 0 && X <= Graphics->Width);
+  ASSERT (Y >= 0 && Y <= Graphics->Height);
+  ASSERT (X2 >= 0 && X2 <= Graphics->Width);
+  ASSERT (Y2 >= 0 && Y2 <= Graphics->Height);
+
+
+  if (X > X2) {
+    Index = X;
+    X = X2;
+    X2 = Index;
+  }
+
+  if (Y > Y2) {
+    Index = Y;
+    Y = Y2;
+    Y2 = Index;
+  }
+  
+  Ucolor  = *(UINT32 *)Color;
+  ColorB = (UINT32)(
+            (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) &
+             Graphics->PixelMasks.RedMask) |
+            (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) &
+             Graphics->PixelMasks.GreenMask) |
+            (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) &
+             Graphics->PixelMasks.BlueMask)
+            );
+  for (Index = X; Index <= X2; Index++) {
+      Buffer  = (UINT32 *)(Graphics->BackBuffer + (Index * Graphics->PixelWidth) + (Y * Graphics->Pitch) );
+      *Buffer = ColorB;
+      Buffer  = (UINT32 *)(Graphics->BackBuffer + (Index * Graphics->PixelWidth) + (Y2 * Graphics->Pitch) );
+      *Buffer = ColorB;
+  }
+  for (Index = Y; Index <= Y2; Index++) {
+      Buffer  = (UINT32 *)(Graphics->BackBuffer + (X * Graphics->PixelWidth) + (Index * Graphics->Pitch) );
+      *Buffer = ColorB;
+      Buffer  = (UINT32 *)(Graphics->BackBuffer + (X2 * Graphics->PixelWidth) + (Index * Graphics->Pitch) );
+      *Buffer = ColorB;
+  }
+
 EFI_STATUS
 EFIAPI
 UefiMain (
