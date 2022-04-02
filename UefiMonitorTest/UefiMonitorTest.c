@@ -194,6 +194,26 @@ GetGraphicsOutputProtocol (
   return Gop;
 }
 
+STATIC
+EFI_STATUS
+Run (
+  IN GRAPHICS_CONTEXT *Graphics
+  )
+{
+  BOOLEAN Running;
+
+  Running = TRUE;
+
+  while (Running == TRUE)
+  {
+    // Buffer swap:
+    CopyMem (Graphics->FrontBuffer, Graphics->BackBuffer, Graphics->BufferSize);
+    Running = FALSE;
+  }
+
+  return EFI_SUCCESS;
+}
+
 EFI_STATUS
 EFIAPI
 UefiMain (
@@ -203,6 +223,9 @@ UefiMain (
 {
   EFI_GRAPHICS_OUTPUT_PROTOCOL  *Gop;
   GRAPHICS_CONTEXT              Graphics;
+  EFI_STATUS                    Status;
+
+  Status = EFI_SUCCESS;
 
   Gop = GetGraphicsOutputProtocol ();
   if (Gop == NULL) {
@@ -212,9 +235,9 @@ UefiMain (
 
   PrepareGraphicsInfo (&Graphics, Gop);
 
-  
+  Status = Run (&Graphics);
 
   ForgetGraphicsInfo (&Graphics);
 
-  return EFI_SUCCESS;
+  return Status;
 }
