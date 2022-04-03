@@ -195,6 +195,44 @@ GetGraphicsOutputProtocol (
 }
 
 STATIC
+VOID
+DrawLine (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X,
+  IN UINTN              Y,
+  IN UINTN              X2,
+  IN UINTN              Y2,
+  GRAPHICS_PIXEL_COLOR  *Color
+  )
+{
+  UINT32 Ucolor;
+  UINT32 dX;
+  UINT32 dY;
+  UINT32 Index;
+  UINT32 ColorB;
+
+  ASSERT (X >= 0 && X <= Graphics->Width);
+  ASSERT (Y >= 0 && Y <= Graphics->Height);
+  ASSERT (X2 >= 0 && X2 <= Graphics->Width);
+  ASSERT (Y2 >= 0 && Y2 <= Graphics->Height);
+
+  Ucolor  = *(UINT32 *)Color;
+  ColorB = GET_ICOLOR(Graphics,Ucolor);
+  dX=X2-X;
+  dY=Y2-Y;
+  if (dX>dY) {
+    for (Index = X; Index <= X2; Index++) {
+      PUT_PUXEL(Graphics, Index, (Y + ( (Index - X) * dY ) / dX), ColorB);
+    }
+  }
+  else {
+    for (Index = Y; Index <= Y2; Index++) {
+      PUT_PUXEL(Graphics, (X + ( (Index - Y) * dX ) / dY), Index, ColorB);
+    }
+  }
+}
+
+STATIC
 EFI_STATUS
 Run (
   IN GRAPHICS_CONTEXT *Graphics
