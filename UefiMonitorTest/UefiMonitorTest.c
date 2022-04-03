@@ -195,6 +195,57 @@ GetGraphicsOutputProtocol (
 }
 
 STATIC
+VOID
+PutLine (
+  IN GRAPHICS_CONTEXT    *Graphics,
+  IN UINTN               X,
+  IN UINTN               Y,
+  IN UINTN	             X2,
+  IN UINTN	             Y2,
+  GRAPHICS_PIXEL_COLOR   *Color
+  )
+{
+  UINT32 *Buffer;
+  UINT32 Ucolor;
+  UINT32 Icolor;
+  UINT32 Index;
+  UINT32 DX;
+  UINT32 DY;
+
+  ASSERT (X >= 0 && X <= Graphics->Width);
+  ASSERT (Y >= 0 && Y <= Graphics->Height);
+  ASSERT (X2 >= 0 && X2 <= Graphics->Width);
+  ASSERT (Y2 >= 0 && Y2 <= Graphics->Height);
+
+  Buffer = Graphics->BackBuffer + Y * Graphics->Pitch;
+  Ucolor =*(UINT32 *)Color;
+  Icolor = GET_ICOLOR(Graphics, Ucolor);
+  DX=X2-X;
+  DY=Y2-Y;
+  Buffer = Graphics->BackBuffer + Y * Graphics->Pitch;
+  if (DX >= DY) {
+    if (X > X2) {
+      Index = X;
+      X = X2;
+      X2 = Index;
+    }
+    for (Index = X; Index <= X2; Index++) {
+      Buffer[Index] = Icolor;
+      Buffer = Graphics->BackBuffer + (Y +((Index - X) * DY) / DX) * Graphics->Pitch;
+    }
+  } else {
+    if (Y > Y2) {
+      Index = Y;
+      Y = Y2;
+      Y2 = Index;
+    }
+    for (Index = Y; Index <= Y2; Index++) {
+      Buffer[(X + ( (Index - Y) * DX ) / DY)] = Icolor;
+      Buffer += Index * Graphics->Pitch;
+    }
+  }
+
+STATIC
 EFI_STATUS
 Run (
   IN GRAPHICS_CONTEXT *Graphics
