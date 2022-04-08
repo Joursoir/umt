@@ -12,6 +12,11 @@
 
 #include "UefiMonitorTest.h"
 
+#define SWAP(A, B, C)                                               \
+    C = A;                                                          \
+    A = B;                                                          \
+    B = C
+
 #define GET_ICOLOR(Graphics, Ucolor)                                \
     (UINT32)(                                                       \
     (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) & \
@@ -192,6 +197,79 @@ GetGraphicsOutputProtocol (
 
   // TODO: free ModeInfo
   return Gop;
+}
+
+/**
+  Draw a line using Bresenham's algorithm
+
+  @retval  VOID
+**/
+STATIC
+VOID
+DrawLine (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X0,
+  IN UINTN              Y0,
+  IN UINTN              X1,
+  IN UINTN              Y1,
+  GRAPHICS_PIXEL_COLOR  *Color
+  )
+{
+  INTN    DeltaX;
+  INTN    DeltaY;
+  INTN    AbsDeltaX;
+  INTN    AbsDeltaY;
+  INTN    Correction;
+  INT8    Direction;
+  UINTN   X, Y, Z;
+  BOOLEAN Reverse;
+  UINT32  Ucolor;
+  UINT32  Icolor;
+
+  ASSERT (X0 >= 0 && X0 < Graphics->Width);
+  ASSERT (Y0 >= 0 && Y0 < Graphics->Height);
+  ASSERT (X1 >= 0 && X1 < Graphics->Width);
+  ASSERT (Y1 >= 0 && Y1 < Graphics->Height);
+
+  DeltaX = X1 - X0;
+  DeltaY = Y1 - Y0;
+  AbsDeltaX = ABS (DeltaX);
+  AbsDeltaY = ABS (DeltaY);
+
+  Reverse = FALSE;
+  if (AbsDeltaX < AbsDeltaY) {
+    SWAP (X0, Y0, Z);
+    SWAP (X1, Y1, Z);
+    Reverse = TRUE;
+  }
+
+  if (X0 > X1) {
+    SWAP (X0, X1, Z);
+    SWAP (Y0, Y1, Z);
+  }
+
+  DeltaX = X1 - X0;
+  DeltaY = Y1 - Y0;
+  AbsDeltaY = ABS (DeltaY) * 2;
+  Correction = 0;
+  Direction = (Y1 > Y0) ? 1 : -1;
+  Ucolor = *(UINT32 *)Color;
+  Icolor = GET_ICOLOR (Graphics, Ucolor);
+
+  Y = Y0;
+  for (X = X0; X <= X1; X++) {
+    if (Reverse) {
+      PUT_PUXEL (Graphics, Y, X, Icolor);
+    } else {
+      PUT_PUXEL (Graphics, X, Y, Icolor);
+    }
+    Correction += AbsDeltaY;
+
+    if (Correction > DeltaX) {
+      Y += Direction;
+      Correction -= DeltaX * 2;
+    }
+  }
 }
 
 STATIC
