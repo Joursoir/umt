@@ -197,18 +197,18 @@ GetGraphicsOutputProtocol (
 STATIC
 VOID
 PutRect (
-  IN GRAPHICS_CONTEXT    *Graphics,
+  IN GRAPHICS_CONTEXT   *Graphics,
   IN UINTN              X,
   IN UINTN              Y,
-  IN UINTN	            X2,
-  IN UINTN	            Y2,
+  IN UINTN              X2,
+  IN UINTN              Y2,
   GRAPHICS_PIXEL_COLOR  *Color
   )
 {
   UINT32 *Buffer;
   UINT32 Ucolor;
   UINT32 Icolor;
-  UINT32 Index, Pointer;
+  UINT32 I, J;
 
   ASSERT (X >= 0 && X <= Graphics->Width);
   ASSERT (Y >= 0 && Y <= Graphics->Height);
@@ -216,12 +216,12 @@ PutRect (
   ASSERT (Y2 >= 0 && Y2 <= Graphics->Height && Y2 >= Y);
 
   Buffer = Graphics->BackBuffer + Y * Graphics->Pitch;
-  Ucolor =*(UINT32 *)Color;
+  Ucolor = *(UINT32 *)Color;
   Icolor = GET_ICOLOR(Graphics, Ucolor);
 
-  for (Pointer = X; Pointer <= X2; Pointer++) {
-    for (Index = Y; Index <= Y2; Index++) {
-      Buffer[Index] = Icolor;
+  for (J = Y; J < Y2; J++) {
+    for (I = X; I < X2; I++) {
+      Buffer[I] = Icolor;
     }
     Buffer += Graphics->Pitch;
   }
