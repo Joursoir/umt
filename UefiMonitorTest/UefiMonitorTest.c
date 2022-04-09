@@ -273,6 +273,39 @@ DrawLine (
 }
 
 STATIC
+VOID
+PutRect (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X0,
+  IN UINTN              Y0,
+  IN UINTN              X1,
+  IN UINTN              Y1,
+  GRAPHICS_PIXEL_COLOR  *Color
+  )
+{
+  UINT32 *Buffer;
+  UINT32 Ucolor;
+  UINT32 Icolor;
+  UINT32 I, J;
+
+  ASSERT (X0 >= 0 && X0 <= Graphics->Width);
+  ASSERT (Y0 >= 0 && Y0 <= Graphics->Height);
+  ASSERT (X1 >= 0 && X1 <= Graphics->Width && X1 >= X0);
+  ASSERT (Y1 >= 0 && Y1 <= Graphics->Height && Y1 >= Y0);
+
+  Buffer = Graphics->BackBuffer + Y0 * Graphics->Pitch;
+  Ucolor = *(UINT32 *)Color;
+  Icolor = GET_ICOLOR(Graphics, Ucolor);
+
+  for (J = Y0; J < Y1; J++) {
+    for (I = X0; I < X1; I++) {
+      Buffer[I] = Icolor;
+    }
+    Buffer += Graphics->Pitch;
+  }
+}
+
+STATIC
 EFI_STATUS
 Run (
   IN GRAPHICS_CONTEXT *Graphics
