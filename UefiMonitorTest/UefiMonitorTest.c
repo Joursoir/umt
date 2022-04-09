@@ -198,10 +198,10 @@ STATIC
 VOID
 PutRect (
   IN GRAPHICS_CONTEXT   *Graphics,
-  IN UINTN              X,
-  IN UINTN              Y,
-  IN UINTN              X2,
-  IN UINTN              Y2,
+  IN UINTN              X0,
+  IN UINTN              Y0,
+  IN UINTN              X1,
+  IN UINTN              Y1,
   GRAPHICS_PIXEL_COLOR  *Color
   )
 {
@@ -210,17 +210,17 @@ PutRect (
   UINT32 Icolor;
   UINT32 I, J;
 
-  ASSERT (X >= 0 && X <= Graphics->Width);
-  ASSERT (Y >= 0 && Y <= Graphics->Height);
-  ASSERT (X2 >= 0 && X2 <= Graphics->Width && X2 >= X);
-  ASSERT (Y2 >= 0 && Y2 <= Graphics->Height && Y2 >= Y);
+  ASSERT (X0 >= 0 && X0 <= Graphics->Width);
+  ASSERT (Y0 >= 0 && Y0 <= Graphics->Height);
+  ASSERT (X1 >= 0 && X1 <= Graphics->Width && X1 >= X0);
+  ASSERT (Y1 >= 0 && Y1 <= Graphics->Height && Y1 >= Y0);
 
-  Buffer = Graphics->BackBuffer + Y * Graphics->Pitch;
+  Buffer = Graphics->BackBuffer + Y0 * Graphics->Pitch;
   Ucolor = *(UINT32 *)Color;
   Icolor = GET_ICOLOR(Graphics, Ucolor);
 
-  for (J = Y; J < Y2; J++) {
-    for (I = X; I < X2; I++) {
+  for (J = Y0; J < Y1; J++) {
+    for (I = X0; I < X1; I++) {
       Buffer[I] = Icolor;
     }
     Buffer += Graphics->Pitch;
