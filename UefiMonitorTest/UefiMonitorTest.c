@@ -11,6 +11,7 @@
 #include <Protocol/GraphicsOutput.h>
 
 #include "UefiMonitorTest.h"
+#include "fonts/System-8x16.h"
 
 #define SWAP(A, B, C)                                               \
     C = A;                                                          \
@@ -302,6 +303,35 @@ PutRect (
       Buffer[I] = Icolor;
     }
     Buffer += Graphics->Pitch;
+  }
+}
+
+/**
+  Draws a character to the screen
+
+  @retval  VOID
+**/
+STATIC
+VOID
+DrawChar (
+  IN GRAPHICS_CONTEXT *Graphics,
+  IN UINTN            X,
+  IN UINTN            Y,
+  IN UINT32           Icolor,
+  IN CHAR16           Char
+  )
+{
+  UINTN Index;
+  UINTN l, c;
+
+  Index = Char * (SYSTEM8X16_FONT_WIDTH * SYSTEM8X16_FONT_HEIGHT) - (SYSTEM8X16_FONT_WIDTH * SYSTEM8X16_FONT_HEIGHT);
+  for (l = 0; l < SYSTEM8X16_FONT_HEIGHT; l++) {
+    for (c = 0; c < SYSTEM8X16_FONT_WIDTH; c++) {
+      if (gFontSystem8x16[Index] == 1) {
+          PUT_PUXEL (Graphics, (X + c), (Y + l), Icolor);
+      }
+      Index++;
+    }
   }
 }
 
