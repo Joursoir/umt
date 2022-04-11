@@ -3,6 +3,7 @@
 #include <Library/DebugLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/BaseMemoryLib.h>
+#include <Library/PrintLib.h>
 #include <Library/UefiApplicationEntryPoint.h>
 #include <Library/UefiLib.h>
 #include <Library/UefiBootServicesTableLib.h>
@@ -12,6 +13,8 @@
 
 #include "UefiMonitorTest.h"
 #include "fonts/System-8x16.h"
+
+#define UMT_MAXPRINT_BUFFER_SIZE 6400 // TODO: Use Pcd
 
 #define SWAP(A, B, C)                                               \
     C = A;                                                          \
@@ -333,6 +336,93 @@ DrawChar (
       Index++;
     }
   }
+}
+
+/**
+  Draws output based on a null-terminated Unicode format string
+  and a arguments list to the screen
+
+  @retval The number of Unicode characters drawn
+**/
+STATIC
+UINTN
+EFIAPI
+DrawStringVF (
+  IN GRAPHICS_CONTEXT     *Graphics,
+  IN UINTN                X,
+  IN UINTN                Y,
+  IN GRAPHICS_PIXEL_COLOR *Color,
+  IN CONST CHAR16         *FormatString,
+  IN VA_LIST              Marker
+  )
+{
+  UINTN   WalkerSize;
+  CHAR16  *FormatWalker;
+  UINTN   Length;
+  UINTN   Index;
+  UINTN   OldX;
+  UINT32  Ucolor;
+  UINT32  Icolor;
+
+  ASSERT(FormatString != NULL);
+
+  WalkerSize = (UMT_MAXPRINT_BUFFER_SIZE + 1) * sizeof(CHAR16);
+  FormatWalker = AllocateZeroPool(WalkerSize);
+  if (FormatWalker == NULL)
+    return 0;
+
+  Length = UnicodeVSPrint(FormatWalker, WalkerSize, FormatString, Marker);
+  Index  = 0;
+  OldX   = X;
+  Ucolor = *(UINT32 *)Color;
+  Icolor = GET_ICOLOR (Graphics, Ucolor);
+
+  while (FormatWalker[Index] != '\0' && Index < Length) {
+    switch (FormatWalker[Index]) {
+    case L'\n':
+      X = OldX;
+      Y += SYSTEM8X16_FONT_HEIGHT;
+      break;
+    case L'\t':
+      X += SYSTEM8X16_FONT_WIDTH * 4;
+      break;
+    default:
+      DrawChar (Graphics, X, Y, Icolor, FormatWalker[Index]);
+      X += SYSTEM8X16_FONT_WIDTH;
+      if (X > Graphics->Width)
+        break;
+    }
+    Index++;
+  }
+
+  FreePool(FormatWalker);
+  return Index;
+}
+
+/**
+  Draws a null-terminated formatted Unicode string to the screen
+
+  @retval The number of Unicode characters drawn
+**/
+STATIC
+UINTN
+EFIAPI
+DrawStringF (
+  IN GRAPHICS_CONTEXT     *Graphics,
+  IN UINTN                X,
+  IN UINTN                Y,
+  IN GRAPHICS_PIXEL_COLOR *Color,
+  IN CONST CHAR16         *FormatString,
+  ...
+  )
+{
+  VA_LIST Marker;
+  UINTN   NumberOfPrinted;
+
+  VA_START (Marker, FormatString);
+  NumberOfPrinted = DrawStringVF(Graphics, X, Y, Color, FormatString, Marker);
+  VA_END (Marker);
+  return NumberOfPrinted;
 }
 
 STATIC

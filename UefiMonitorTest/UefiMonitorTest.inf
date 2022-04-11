@@ -18,6 +18,7 @@
   DebugLib
   MemoryAllocationLib
   PcdLib
+  PrintLib
   UefiApplicationEntryPoint
   UefiBootServicesTableLib
   UefiLib
