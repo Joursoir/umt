@@ -317,7 +317,6 @@ DrawCircle (
   IN UINTN              Y0,
   IN UINTN              R,
   GRAPHICS_PIXEL_COLOR  *Color
-
 )
 {
   UINT32 *Buffer;
@@ -331,7 +330,6 @@ DrawCircle (
 
   Ucolor = *(UINT32 *)Color;
   Icolor = GET_ICOLOR(Graphics, Ucolor);
-
   Buffer = Graphics->BackBuffer + (Y0 - R) * Graphics->Pitch;
 
   for (J = (Y0 - R); J <= (Y0 + R); J++) {
