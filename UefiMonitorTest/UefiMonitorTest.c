@@ -324,8 +324,8 @@ DrawCircle (
   UINT32 Icolor;
   UINT32 I, J;
 
-  ASSERT (X0 > 0 && X0 < Graphics->Width);
-  ASSERT (Y0 > 0 && Y0 < Graphics->Height);
+  ASSERT (X0 >= 0 && X0 < Graphics->Width);
+  ASSERT (Y0 >= 0 && Y0 < Graphics->Height);
   ASSERT (R > 0);
   ASSERT ((X0 + R) < Graphics->Width && X0 >= R);
   ASSERT ((Y0 + R) < Graphics->Height && Y0 >= R);
