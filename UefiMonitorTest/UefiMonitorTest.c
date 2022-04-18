@@ -88,7 +88,7 @@ ParseGraphicsPixelFormat (
 }
 
 STATIC
-VOID
+EFI_STATUS
 PrepareGraphicsInfo (
   IN GRAPHICS_CONTEXT             *Graphics,
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL *Gop
@@ -117,11 +117,11 @@ PrepareGraphicsInfo (
 
     case PixelBltOnly:
       ASSERT (FALSE);
-      //return RETURN_UNSUPPORTED;
+      return RETURN_UNSUPPORTED;
 
     default:
       ASSERT (FALSE);
-      // return RETURN_INVALID_PARAMETER;
+      return RETURN_INVALID_PARAMETER;
   }
 
   DEBUG ((
@@ -142,7 +142,8 @@ PrepareGraphicsInfo (
   Graphics->FrontBuffer = (UINT32 *)Gop->Mode->FrameBufferBase;
   Graphics->BufferSize  = Gop->Mode->FrameBufferSize;
   Graphics->BackBuffer  = AllocateCopyPool (Graphics->BufferSize, Graphics->FrontBuffer);
-  ASSERT (Graphics->BackBuffer != NULL);
+  if (Graphics->BackBuffer == NULL)
+    return EFI_OUT_OF_RESOURCES;
   Graphics->Width       = Gop->Mode->Info->HorizontalResolution;
   Graphics->Height      = Gop->Mode->Info->VerticalResolution;
   CopyMem (&Graphics->PixelMasks, BitMask, sizeof (*BitMask));
@@ -150,6 +151,8 @@ PrepareGraphicsInfo (
   CopyMem (Graphics->PixelShr, PixelShr, sizeof (PixelShr));
   Graphics->PixelWidth  = PixelWidth;
   Graphics->Pitch       = Gop->Mode->Info->PixelsPerScanLine;
+
+  return EFI_SUCCESS;
 }
 
 STATIC
@@ -499,7 +502,11 @@ UefiMain (
     return EFI_NOT_FOUND;
   }
 
-  PrepareGraphicsInfo (&Graphics, Gop);
+  Status = PrepareGraphicsInfo (&Graphics, Gop);
+  if (EFI_ERROR(Status)) {
+    Print (L"Error: Preparing graphics information is failed. %r\n", Status);
+    return EFI_NOT_FOUND;
+  }
 
   Status = Run (&Graphics);
 
