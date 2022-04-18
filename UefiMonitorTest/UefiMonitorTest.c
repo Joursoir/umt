@@ -309,6 +309,41 @@ PutRect (
   }
 }
 
+STATIC
+VOID
+DrawCircle (
+  IN GRAPHICS_CONTEXT   *Graphics,
+  IN UINTN              X0,
+  IN UINTN              Y0,
+  IN UINTN              R,
+  GRAPHICS_PIXEL_COLOR  *Color
+)
+{
+  UINT32 *Buffer;
+  UINT32 Ucolor;
+  UINT32 Icolor;
+  UINT32 I, J;
+
+  ASSERT (X0 >= 0 && X0 < Graphics->Width);
+  ASSERT (Y0 >= 0 && Y0 < Graphics->Height);
+  ASSERT (R > 0);
+  ASSERT ((X0 + R) < Graphics->Width && X0 >= R);
+  ASSERT ((Y0 + R) < Graphics->Height && Y0 >= R);
+
+  Ucolor = *(UINT32 *)Color;
+  Icolor = GET_ICOLOR(Graphics, Ucolor);
+  Buffer = Graphics->BackBuffer + (Y0 - R) * Graphics->Pitch;
+
+  for (J = (Y0 - R); J <= (Y0 + R); J++) {
+    for (I = (X0 - R); I <= (X0 + R); I++) {
+      if ((J - Y0) * (J - Y0) + (I - X0) * (I - X0) <= (R * R)) {
+        Buffer[I] = Icolor;
+      }
+    }
+    Buffer += Graphics->Pitch;
+  }
+}
+
 /**
   Draws a character to the screen
 
