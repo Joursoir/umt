@@ -56,6 +56,14 @@ typedef struct {
   /// Amount of bytes you should skip to go one pixel down.
   ///
   UINT32                                  Pitch;
+  //
+  // A mouse support.
+  //
+  BOOLEAN                                 MouseSupported;
+  //
+  // The MouseInterface instance.
+  //
+  EFI_SIMPLE_POINTER_PROTOCOL             *MouseInterface;
 } GRAPHICS_CONTEXT;
 
 #endif /* UEFI_MONITOR_TEST_H */

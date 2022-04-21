@@ -10,6 +10,7 @@
 #include <Library/UefiRuntimeServicesTableLib.h>
 
 #include <Protocol/GraphicsOutput.h>
+#include <Protocol/SimplePointer.h>
 
 #include "UefiMonitorTest.h"
 #include "fonts/System-8x16.h"
@@ -130,10 +131,14 @@ PrepareGraphicsInfo (
   IN EFI_GRAPHICS_OUTPUT_PROTOCOL *Gop
   )
 {
-  CONST EFI_PIXEL_BITMASK  *BitMask;
-  UINT32                   PixelWidth;
-  INT8                     PixelShl[4];
-  INT8                     PixelShr[4];
+  EFI_STATUS              Status;
+  CONST EFI_PIXEL_BITMASK *BitMask;
+  UINT32                  PixelWidth;
+  INT8                    PixelShl[4];
+  INT8                    PixelShr[4];
+  EFI_HANDLE              *HandleBuffer;
+  UINTN                   HandleCount;
+  UINTN                   Index;
 
   ASSERT (Graphics != NULL);
   ASSERT (Gop != NULL);
@@ -188,6 +193,46 @@ PrepareGraphicsInfo (
   Graphics->PixelWidth  = PixelWidth;
   Graphics->Pitch       = Gop->Mode->Info->PixelsPerScanLine;
 
+  // Find mouse in System Table ConsoleInHandle
+  Status = gBS->HandleProtocol (
+                  gST->ConsoleInHandle,
+                  &gEfiSimplePointerProtocolGuid,
+                  (VOID **)&Graphics->MouseInterface
+                  );
+  if (EFI_ERROR (Status))
+  {
+    HandleBuffer               = NULL;
+    Graphics->MouseInterface   = NULL;
+    Status                     = gBS->LocateHandleBuffer (
+                                        ByProtocol,
+                                        &gEfiSimplePointerProtocolGuid,
+                                        NULL,
+                                        &HandleCount,
+                                        &HandleBuffer
+                                        );
+    if (!EFI_ERROR (Status)) {
+      for (Index = 0; Index < HandleCount; Index++) {
+        Status = gBS->HandleProtocol (
+                        HandleBuffer[Index],
+                        &gEfiSimplePointerProtocolGuid,
+                        (VOID **)&Graphics->MouseInterface
+                        );
+        if (!EFI_ERROR (Status)) {
+          break;
+        }
+      }
+    }
+
+    if (HandleBuffer != NULL) {
+      FreePool (HandleBuffer);
+    }
+  }
+
+  if (!EFI_ERROR (Status) && (Graphics->MouseInterface != NULL)) {
+    Graphics->MouseSupported    = TRUE;
+  }
+
+  DEBUG ((DEBUG_INFO, "Mouse support: %s\n\n", Graphics->MouseSupported ? L"Yes" : L"No"));
   return EFI_SUCCESS;
 }
 

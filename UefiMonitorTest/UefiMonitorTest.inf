@@ -24,6 +24,9 @@
   UefiLib
   UefiRuntimeServicesTableLib
 
+[Protocols]
+  gEfiSimplePointerProtocolGuid
+
 [FeaturePcd]
 
 [Pcd]
