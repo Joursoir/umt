@@ -193,6 +193,17 @@ PrepareGraphicsInfo (
   Graphics->PixelWidth  = PixelWidth;
   Graphics->Pitch       = Gop->Mode->Info->PixelsPerScanLine;
 
+  // Find TextInEx in System Table ConsoleInHandle
+  Status = gBS->HandleProtocol (
+                  gST->ConsoleInHandle,
+                  &gEfiSimpleTextInputExProtocolGuid,
+                  (VOID **)&Graphics->TextInputEx
+                  );
+  if (EFI_ERROR (Status)) {
+    FreePool (Graphics->BackBuffer);
+    return Status;
+  }
+
   // Find mouse in System Table ConsoleInHandle
   Status = gBS->HandleProtocol (
                   gST->ConsoleInHandle,

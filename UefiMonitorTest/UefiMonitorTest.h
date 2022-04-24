@@ -57,6 +57,10 @@ typedef struct {
   ///
   UINT32                                  Pitch;
   //
+  // The EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL instance.
+  //
+  EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL       *TextInputEx;
+  //
   // A mouse support.
   //
   BOOLEAN                                 MouseSupported;
