@@ -6,9 +6,10 @@
 #include <Library/UefiBootServicesTableLib.h>
 
 #include "UefiMonitorTest.h"
+#include "MainMenu.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
-  { NULL, NULL, NULL, NULL, NULL }
+  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuKeyRight, MainMenuKeyLeft }
 };
 
 STATIC

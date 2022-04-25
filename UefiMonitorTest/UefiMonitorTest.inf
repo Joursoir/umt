@@ -9,6 +9,7 @@
 [Sources]
   UefiMonitorTest.c
   Graphics.c
+  MainMenu.c
 
 [Packages]
   MdePkg/MdePkg.dec
