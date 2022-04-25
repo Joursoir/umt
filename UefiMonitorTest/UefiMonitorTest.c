@@ -7,6 +7,9 @@
 
 #include "UefiMonitorTest.h"
 
+STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
+  { NULL, NULL, NULL, NULL, NULL }
+};
 
 STATIC
 EFI_GRAPHICS_OUTPUT_PROTOCOL *
@@ -53,15 +56,21 @@ Run (
   IN GRAPHICS_CONTEXT *Graphics
   )
 {
-  BOOLEAN Running;
+  UMT_CONTEXT Ctx;
 
-  Running = TRUE;
+  Ctx.State     = UMT_STATE_MAIN_MENU;
+  Ctx.Running   = TRUE;
+  Ctx.ShowTip   = FALSE;
+  Ctx.Actions   = &mStateActions[Ctx.State];
+  Ctx.Graphics  = Graphics;
+  Ctx.Actions->Init (&Ctx);
 
-  while (Running == TRUE)
+  while (Ctx.Running == TRUE)
   {
+    Ctx.Actions->Doit (&Ctx);
+
     // Buffer swap:
     CopyMem (Graphics->FrontBuffer, Graphics->BackBuffer, Graphics->BufferSize);
-    Running = FALSE;
   }
 
   return EFI_SUCCESS;
