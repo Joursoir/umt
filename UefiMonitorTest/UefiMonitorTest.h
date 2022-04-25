@@ -1,73 +1,7 @@
 #ifndef UEFI_MONITOR_TEST_H
 #define UEFI_MONITOR_TEST_H
 
-typedef struct {
-  UINT8 Blue;
-  UINT8 Green;
-  UINT8 Red;
-  UINT8 Reserved;
-} GRAPHICS_PIXEL_COLOR;
 
-typedef struct {
-  ///
-  /// The EFI_GRAPHICS_OUTPUT_PROTOCOL instance.
-  ///
-  EFI_GRAPHICS_OUTPUT_PROTOCOL            *Gop;
-  ///
-  /// Base address of graphics linear frame buffer.
-  /// Starts from the upper left pixel.
-  ///
-  UINT32                                  *FrontBuffer;
-  ///
-  /// Pointer to allocated memory. Secondary linear buffer.
-  ///
-  UINT32                                  *BackBuffer;
-  ///
-  /// Amount of frame buffer needed to support the active mode in bytes.
-  ///
-  UINTN                                   BufferSize;
-  ///
-  /// The size of video screen in pixels in the X dimension.
-  ///
-  UINT32                                  Width;
-  ///
-  /// The size of video screen in pixels in the Y dimension.
-  ///
-  UINT32                                  Height;
-  ///
-  /// Bit-mask defines what bits are used for different colors.
-  ///
-  EFI_PIXEL_BITMASK                       PixelMasks;
-  ///
-  /// Amount of bits to shift left.
-  /// R-G-B-Rsvd
-  ///
-  INT8                                    PixelShl[4];
-  ///
-  /// Amount of bits to shift right.
-  /// R-G-B-Rsvd
-  ///
-  INT8                                    PixelShr[4];
-  ///
-  /// The size of pixel color in bytes.
-  ///
-  UINT32                                  PixelWidth;
-  ///
-  /// Amount of bytes you should skip to go one pixel down.
-  ///
-  UINT32                                  Pitch;
-  //
-  // The EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL instance.
-  //
-  EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL       *TextInputEx;
-  //
-  // A mouse support.
-  //
-  BOOLEAN                                 MouseSupported;
-  //
-  // The MouseInterface instance.
-  //
-  EFI_SIMPLE_POINTER_PROTOCOL             *MouseInterface;
-} GRAPHICS_CONTEXT;
+#include "Graphics.h"
 
 #endif /* UEFI_MONITOR_TEST_H */
