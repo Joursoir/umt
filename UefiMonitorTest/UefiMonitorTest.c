@@ -51,6 +51,22 @@ RegisterHiiPackage (
 }
 
 STATIC
+EFI_STATUS
+UnregisterHiiPackage (
+  IN  EFI_HII_HANDLE  HiiHandle
+  )
+{
+  EFI_STATUS  Status;
+
+  Status = gHiiDatabase->RemovePackageList(gHiiDatabase, HiiHandle);
+  if (EFI_ERROR(Status)) {
+    DEBUG ((DEBUG_WARN, "Failed to remove HII Package list from HII database: %r\n", Status));
+  }
+
+  return Status;
+}
+
+STATIC
 EFI_GRAPHICS_OUTPUT_PROTOCOL *
 GetGraphicsOutputProtocol (
   VOID
@@ -149,6 +165,8 @@ UefiMain (
   Status = Run (&Graphics);
 
   ForgetGraphicsInfo (&Graphics);
+
+  UnregisterHiiPackage (gUmtHiiHandle);
 
   return Status;
 }
