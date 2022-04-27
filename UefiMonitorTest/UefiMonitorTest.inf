@@ -11,6 +11,7 @@
   UefiMonitorTest.c
   Graphics.c
   MainMenu.c
+  UefiMonitorTestStrings.uni
 
 [Packages]
   MdePkg/MdePkg.dec

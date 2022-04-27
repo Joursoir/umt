@@ -1,0 +1,5 @@
+#langdef  en-US "English"
+
+#string STR_NULL_STRING                       #language en-US  " "
+
+//
