@@ -28,4 +28,6 @@ struct _UMT_CONTEXT {
   GRAPHICS_CONTEXT        *Graphics;
 };
 
+extern EFI_HII_HANDLE gUmtHiiHandle;
+
 #endif /* UEFI_MONITOR_TEST_H */

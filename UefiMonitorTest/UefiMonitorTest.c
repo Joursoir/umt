@@ -5,12 +5,50 @@
 #include <Library/UefiLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 
+#include <Library/HiiLib.h>
+#include <Library/UefiHiiServicesLib.h>
+
 #include "UefiMonitorTest.h"
 #include "MainMenu.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuKeyRight, MainMenuKeyLeft }
 };
+
+EFI_HII_HANDLE gUmtHiiHandle = NULL;
+
+STATIC
+EFI_STATUS
+RegisterHiiPackage (
+  IN  EFI_HANDLE      ImageHandle,
+  OUT EFI_HII_HANDLE  *HiiHandle
+  )
+{
+  EFI_STATUS                  Status;
+  EFI_HII_PACKAGE_LIST_HEADER *PackageList;
+
+  // Retrieve HII package list from ImageHandle
+  Status = gBS->OpenProtocol (
+                  ImageHandle,
+                  &gEfiHiiPackageListProtocolGuid,
+                  (VOID **)&PackageList,
+                  ImageHandle,
+                  NULL,
+                  EFI_OPEN_PROTOCOL_GET_PROTOCOL
+                  );
+  if (EFI_ERROR (Status)) {
+    DEBUG ((DEBUG_ERROR, "Failed to open EFI_HII_PACKAGE_LIST_PROTOCOL\n"));
+    return Status;
+  }
+
+  Status = gHiiDatabase->NewPackageList(gHiiDatabase, PackageList, NULL, HiiHandle);
+  if (EFI_ERROR(Status)) {
+    DEBUG ((DEBUG_ERROR, "Failed to add HII Package list to HII database: %r\n", Status));
+    return Status;
+  }
+
+  return Status;
+}
 
 STATIC
 EFI_GRAPHICS_OUTPUT_PROTOCOL *
@@ -89,6 +127,12 @@ UefiMain (
   EFI_STATUS                    Status;
 
   Status = EFI_SUCCESS;
+
+  Status = RegisterHiiPackage (ImageHandle, &gUmtHiiHandle);
+  if (EFI_ERROR(Status)) {
+    Print (L"Error: Failed to register HII Package list\n");
+    return Status;
+  }
 
   Gop = GetGraphicsOutputProtocol ();
   if (Gop == NULL) {

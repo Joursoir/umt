@@ -5,6 +5,7 @@
   MODULE_TYPE                    = UEFI_APPLICATION
   VERSION_STRING                 = 1.0
   ENTRY_POINT                    = UefiMain
+  UEFI_HII_RESOURCE_SECTION      = TRUE
 
 [Sources]
   UefiMonitorTest.c
@@ -18,15 +19,18 @@
 [LibraryClasses]
   BaseLib
   DebugLib
+  HiiLib
   MemoryAllocationLib
   PcdLib
   PrintLib
   UefiApplicationEntryPoint
   UefiBootServicesTableLib
+  UefiHiiServicesLib
   UefiLib
   UefiRuntimeServicesTableLib
 
 [Protocols]
+  gEfiHiiPackageListProtocolGuid
   gEfiSimplePointerProtocolGuid
   gEfiSimpleTextInputExProtocolGuid
 
