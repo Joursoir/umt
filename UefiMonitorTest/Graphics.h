@@ -218,4 +218,16 @@ DrawStringF (
   ...
   );
 
+UINTN
+EFIAPI
+DrawHiiStringF (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X,
+  IN UINTN                      Y,
+  IN CONST GRAPHICS_PIXEL_COLOR *Color,
+  IN CONST EFI_STRING_ID        HiiFormatStringId,
+  IN CONST EFI_HII_HANDLE       HiiFormatHandle,
+  ...
+  );
+
 #endif /* UMT_GRAPHICS_H */

@@ -1,5 +1,6 @@
 #include <Library/BaseLib.h>
 #include <Library/DebugLib.h>
+#include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
 #include <Library/BaseMemoryLib.h>
 #include <Library/PrintLib.h>
@@ -544,6 +545,34 @@ DrawStringF (
 
   VA_START (Marker, FormatString);
   NumberOfPrinted = DrawStringVF(Graphics, X, Y, Color, FormatString, Marker);
+  VA_END (Marker);
+  return NumberOfPrinted;
+}
+
+UINTN
+EFIAPI
+DrawHiiStringF (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X,
+  IN UINTN                      Y,
+  IN CONST GRAPHICS_PIXEL_COLOR *Color,
+  IN CONST EFI_STRING_ID        HiiFormatStringId,
+  IN CONST EFI_HII_HANDLE       HiiFormatHandle,
+  ...
+  )
+{
+  VA_LIST Marker;
+  CHAR16  *HiiFormatString;
+  UINTN   NumberOfPrinted;
+
+  NumberOfPrinted = 0;
+
+  VA_START (Marker, HiiFormatHandle);
+  HiiFormatString = HiiGetString (HiiFormatHandle, HiiFormatStringId, NULL);
+  if (HiiFormatString != NULL) {
+    NumberOfPrinted = DrawStringVF(Graphics, X, Y, Color, HiiFormatString, Marker);
+    FreePool (HiiFormatString);
+  }
   VA_END (Marker);
   return NumberOfPrinted;
 }
