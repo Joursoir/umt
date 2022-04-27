@@ -121,6 +121,69 @@ ChangeCtxState (
   Ctx->Actions->Init (Ctx);
 }
 
+/**
+  Handle user key input. Will route it to other components handle function
+
+  @retval VOID
+**/
+STATIC
+VOID
+HandleInput (
+  IN UMT_CONTEXT *Ctx
+  )
+{
+  EFI_KEY_DATA  KeyData;
+  EFI_STATUS    Status;
+
+  // TODO: check mouse activity
+
+  // Check keyboard activity
+  Status = gBS->CheckEvent (Ctx->Graphics->TextInputEx->WaitForKeyEx);
+  if (EFI_ERROR (Status))
+    return;
+
+  Status = Ctx->Graphics->TextInputEx->ReadKeyStrokeEx (Ctx->Graphics->TextInputEx, &KeyData);
+  if (EFI_ERROR (Status))
+    return;
+
+  switch (KeyData.Key.ScanCode) {
+    case SCAN_UP:
+    case SCAN_DOWN:
+      break;
+
+    case SCAN_RIGHT:
+      Ctx->Actions->KeyRight (Ctx);
+      break;
+
+    case SCAN_LEFT:
+      Ctx->Actions->KeyLeft (Ctx);
+      break;
+
+    case SCAN_F1...SCAN_F11:
+      break;
+
+    case SCAN_F12:
+      break;
+
+    case SCAN_ESC:
+      if (Ctx->State != UMT_STATE_MAIN_MENU) {
+        ChangeCtxState (Ctx, UMT_STATE_MAIN_MENU);
+        break;
+      }
+
+      Ctx->Running = FALSE;
+      break;
+
+    default:
+      break;
+  }
+
+  if (KeyData.Key.ScanCode == NULL && KeyData.Key.UnicodeChar == L' ') {
+    Ctx->ShowTip = !Ctx->ShowTip;
+    Ctx->Actions->Tip (Ctx);
+  }
+}
+
 STATIC
 EFI_STATUS
 Run (
@@ -135,6 +198,8 @@ Run (
 
   while (Ctx.Running == TRUE)
   {
+    HandleInput (&Ctx);
+
     Ctx.Actions->Doit (&Ctx);
 
     // Buffer swap:
