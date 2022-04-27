@@ -2,4 +2,31 @@
 
 #string STR_NULL_STRING                       #language en-US  " "
 
-//
+//          Main Menu
+
+#string STR_MM_TITLE                          #language en-US "UEFI MONITOR TEST V%s"
+
+#string STR_MM_SUBTITLE                       #language en-US "Let's choose the test you would like to carry out"
+
+#string STR_MM_MENU                           #language en-US "F1  Solid Colors        F5  Chess board         F9  NONE\n"
+                                                              "F2  Colored lines       F6  NONE                F10 NONE\n"
+                                                              "F3  Grayscale           F7  NONE                F11 NONE\n"
+                                                              "F4  Mesh field          F8  NONE                F12 Settings\n"
+
+#string STR_MM_TIP_TITLE                      #language en-US "CONTROLS:"
+
+#string STR_MM_TIP_FIRST                      #language en-US "You can use the arrow\n"
+                                                              "buttons on the\n"
+                                                              "keyboard to customize\n"
+                                                              "the test."
+
+#string STR_MM_TIP_SECOND                     #language en-US "Use the space key to\n"
+                                                              "show or hide all of\n"
+                                                              "of the operating\n"
+                                                              "elements."
+
+#string STR_MM_TIP_THIRD                      #language en-US "Hit the escape key on\n"
+                                                              "your keyboard to end\n"
+                                                              "the test or exit from\n"
+                                                              "application."
+
