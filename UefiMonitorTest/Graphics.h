@@ -138,6 +138,18 @@ PutRect (
   );
 
 VOID
+DrawRectWithBorder (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X0,
+  IN UINTN                      Y0,
+  IN UINTN                      X1,
+  IN UINTN                      Y1,
+  IN UINTN                      BorderSize,
+  IN CONST GRAPHICS_PIXEL_COLOR *MainColor,
+  IN CONST GRAPHICS_PIXEL_COLOR *BorderColor
+  );
+
+VOID
 DrawCircle (
   IN GRAPHICS_CONTEXT           *Graphics,
   IN UINTN                      X0,

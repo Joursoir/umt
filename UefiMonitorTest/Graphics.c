@@ -336,6 +336,29 @@ PutRect (
 }
 
 VOID
+DrawRectWithBorder (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X0,
+  IN UINTN                      Y0,
+  IN UINTN                      X1,
+  IN UINTN                      Y1,
+  IN UINTN                      BorderSize,
+  IN CONST GRAPHICS_PIXEL_COLOR *MainColor,
+  IN CONST GRAPHICS_PIXEL_COLOR *BorderColor
+  )
+{
+  UINT8 Index;
+
+  for (Index = 0; Index < BorderSize; Index++) {
+    DrawLine (Graphics, X0            , Y0 + Index    , X1 - 1        , Y0 + Index    , BorderColor);
+    DrawLine (Graphics, X0 + Index    , Y0            , X0 + Index    , Y1 - 1        , BorderColor);
+    DrawLine (Graphics, X1 - 1 - Index, Y0            , X1 - 1 - Index, Y1 - 1        , BorderColor);
+    DrawLine (Graphics, X0            , Y1 - 1 - Index, X1 - 1        , Y1 - 1 - Index, BorderColor);
+  }
+  PutRect (Graphics, X0 + BorderSize, Y0 + BorderSize, X1 - BorderSize, Y1 - BorderSize, MainColor);
+}
+
+VOID
 DrawCircle (
   IN GRAPHICS_CONTEXT           *Graphics,
   IN UINTN                      X0,
