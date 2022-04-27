@@ -106,6 +106,22 @@ GetGraphicsOutputProtocol (
 }
 
 STATIC
+VOID
+ChangeCtxState (
+  IN  UMT_CONTEXT     *Ctx,
+  IN  enum UMT_STATE  State
+  )
+{
+  if (State >= UMT_STATE_END)
+    return;
+
+  Ctx->State   = State;
+  Ctx->ShowTip = FALSE;
+  Ctx->Actions = &mStateActions[State];
+  Ctx->Actions->Init (Ctx);
+}
+
+STATIC
 EFI_STATUS
 Run (
   IN GRAPHICS_CONTEXT *Graphics
@@ -113,12 +129,9 @@ Run (
 {
   UMT_CONTEXT Ctx;
 
-  Ctx.State     = UMT_STATE_MAIN_MENU;
   Ctx.Running   = TRUE;
-  Ctx.ShowTip   = FALSE;
-  Ctx.Actions   = &mStateActions[Ctx.State];
   Ctx.Graphics  = Graphics;
-  Ctx.Actions->Init (&Ctx);
+  ChangeCtxState (&Ctx, UMT_STATE_MAIN_MENU);
 
   while (Ctx.Running == TRUE)
   {
