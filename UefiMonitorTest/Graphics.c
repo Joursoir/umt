@@ -447,6 +447,22 @@ DrawChar (
   }
 }
 
+EFI_STATUS
+GetFontParameters (
+  IN  GRAPHICS_CONTEXT *Graphics,
+  OUT UINTN           *FontWidth,
+  OUT UINTN           *FontHeight
+  )
+{
+  ASSERT (FontWidth  != NULL);
+  ASSERT (FontHeight != NULL);
+
+  *FontWidth  = SYSTEM8X16_FONT_WIDTH;
+  *FontHeight = SYSTEM8X16_FONT_HEIGHT;
+
+  return EFI_SUCCESS;
+}
+
 /**
   Draws output based on a null-terminated Unicode format string
   and a arguments list to the screen

@@ -183,6 +183,13 @@ DrawChar (
   IN CHAR16           Char
   );
 
+EFI_STATUS
+GetFontParameters (
+  IN  GRAPHICS_CONTEXT *Graphics,
+  OUT UINTN           *FontWidth,
+  OUT UINTN           *FontHeight
+  );
+
 /**
   Draws output based on a null-terminated Unicode format string
   and a arguments list to the screen
