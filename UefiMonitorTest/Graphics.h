@@ -150,6 +150,17 @@ DrawRectWithBorder (
   );
 
 VOID
+DrawRoundedRect (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X0,
+  IN UINTN                      Y0,
+  IN UINTN                      X1,
+  IN UINTN                      Y1,
+  IN UINTN                      CornerRadius,
+  IN CONST GRAPHICS_PIXEL_COLOR *Color
+  );
+
+VOID
 DrawCircle (
   IN GRAPHICS_CONTEXT           *Graphics,
   IN UINTN                      X0,

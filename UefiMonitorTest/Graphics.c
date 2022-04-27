@@ -359,6 +359,33 @@ DrawRectWithBorder (
 }
 
 VOID
+DrawRoundedRect (
+  IN GRAPHICS_CONTEXT           *Graphics,
+  IN UINTN                      X0,
+  IN UINTN                      Y0,
+  IN UINTN                      X1,
+  IN UINTN                      Y1,
+  IN UINTN                      CornerRadius,
+  IN CONST GRAPHICS_PIXEL_COLOR *Color
+  )
+{
+  UINT8 Index;
+
+  DrawCircle (Graphics, X0 + CornerRadius, Y0 + CornerRadius, CornerRadius, Color);
+  DrawCircle (Graphics, X1 - CornerRadius, Y0 + CornerRadius, CornerRadius, Color);
+  DrawCircle (Graphics, X0 + CornerRadius, Y1 - CornerRadius, CornerRadius, Color);
+  DrawCircle (Graphics, X1 - CornerRadius, Y1 - CornerRadius, CornerRadius, Color);
+
+  for (Index = 0; Index < CornerRadius; Index++) {
+    DrawLine (Graphics, X0 + CornerRadius, Y0 + Index       , X1 - 1 - CornerRadius, Y0 + Index, Color);
+    DrawLine (Graphics, X0 + Index       , Y0 + CornerRadius, X0 + Index           , Y1 - 1 - CornerRadius, Color);
+    DrawLine (Graphics, X1 - 1 - Index   , Y0 + CornerRadius, X1 - 1 - Index       , Y1 - 1 - CornerRadius, Color);
+    DrawLine (Graphics, X0 + CornerRadius, Y1 - 1 - Index   , X1 - 1 - CornerRadius, Y1 - 1 - Index, Color);
+  }
+  PutRect (Graphics, X0 + CornerRadius, Y0 + CornerRadius, X1 - CornerRadius, Y1 - CornerRadius, Color);
+}
+
+VOID
 DrawCircle (
   IN GRAPHICS_CONTEXT           *Graphics,
   IN UINTN                      X0,
