@@ -26,6 +26,8 @@
      Graphics->PixelMasks.BlueMask)                                 \
     )
 
+#define CONVEX (UINT32)(2)
+
 CONST EFI_PIXEL_BITMASK mRgbPixelMasks = {
   0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
 };
@@ -412,7 +414,7 @@ DrawCircle (
 
   for (J = (Y0 - R); J <= (Y0 + R); J++) {
     for (I = (X0 - R); I <= (X0 + R); I++) {
-      if ((J - Y0) * (J - Y0) + (I - X0) * (I - X0) <= (R * R)) {
+      if ((J - Y0) * (J - Y0) + (I - X0) * (I - X0) <= ((R + CONVEX) * (R + CONVEX))) {
         Buffer[I] = Icolor;
       }
     }
