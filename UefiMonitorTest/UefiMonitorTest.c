@@ -178,7 +178,7 @@ HandleInput (
       break;
   }
 
-  if (KeyData.Key.ScanCode == NULL && KeyData.Key.UnicodeChar == L' ') {
+  if (KeyData.Key.ScanCode == SCAN_NULL && KeyData.Key.UnicodeChar == L' ') {
     Ctx->ShowTip = !Ctx->ShowTip;
     Ctx->Actions->Tip (Ctx);
   }
