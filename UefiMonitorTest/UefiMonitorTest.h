@@ -4,6 +4,8 @@
 
 #include "Graphics.h"
 
+#define UMT_VERSION L"0.1.0"
+
 typedef struct _UMT_CONTEXT UMT_CONTEXT;
 
 typedef struct {
