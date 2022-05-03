@@ -7,6 +7,8 @@
 #include <Protocol/SimpleTextIn.h>
 #include <Protocol/SimplePointer.h>
 
+#define GET_UCOLOR(Color) (*(UINT32 *)Color)
+
 #define PUT_PUXEL(Graphics, X, Y, Icolor) \
     Graphics->BackBuffer[X + (Y * Graphics->Pitch)] = Icolor
 
@@ -110,6 +112,22 @@ PrepareGraphicsInfo (
 VOID
 ForgetGraphicsInfo (
   IN GRAPHICS_CONTEXT *Graphics
+  );
+
+/**
+  Get a color that doesn't depend on pixel format, i.e.
+  independent color.
+
+  @param[in] Graphics               A graphics context.
+  @param[in] Ucolor                 A GRAPHICS_PIXEL_COLOR, which is
+                                    represented as unsigned 32-bit.
+
+  @retval  UINT32                   A color in independent format.
+**/
+UINT32
+GetIcolor (
+  IN  GRAPHICS_CONTEXT  *Graphics,
+  IN  UINT32            Ucolor
   );
 
 /**
