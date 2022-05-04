@@ -30,3 +30,30 @@
                                                               "the test or exit from\n"
                                                               "application."
 
+//          Test "Solid Colors"
+
+#string STR_SOLID_COLORS_BLACK_TITLE          #language en-US "DEFECTIVE PIXELS ON BLACK"
+#string STR_SOLID_COLORS_BLACK_MSG            #language en-US "Check if there are any defective pixels on the monitor.\n"
+                                                              "All of the pixels should be black. If you see a pixel\n"
+                                                              "illuminated in color, this indicates a continuously\n"
+                                                              "illuminated subpixel.\n"
+
+#string STR_SOLID_COLORS_WHITE_TITLE          #language en-US "DEFECTIVE PIXELS ON WHITE"
+#string STR_SOLID_COLORS_WHITE_MSG            #language en-US "Check if there are any defective pixels on the monitor.\n"
+                                                              "All of the pixels should be white. If you see a black\n"
+                                                              "pixel, this indicates a missing pixel.\n"
+
+#string STR_SOLID_COLORS_RED_TITLE            #language en-US "DEFECTIVE PIXELS ON RED"
+#string STR_SOLID_COLORS_RED_MSG              #language en-US "Check if there are any defective pixels on the monitor.\n"
+                                                              "All of the pixels should be red. If you see a black\n"
+                                                              "pixel, this indicates a missing red subpixel.\n"
+
+#string STR_SOLID_COLORS_GREEN_TITLE          #language en-US "DEFECTIVE PIXELS ON GREEN"
+#string STR_SOLID_COLORS_GREEN_MSG            #language en-US "Check if there are any defective pixels on the monitor.\n"
+                                                              "All of the pixels should be green. If you see a black\n"
+                                                              "pixel, this indicates a missing green subpixel.\n"
+
+#string STR_SOLID_COLORS_BLUE_TITLE           #language en-US "DEFECTIVE PIXELS ON BLUE"
+#string STR_SOLID_COLORS_BLUE_MSG             #language en-US "Check if there are any defective pixels on the monitor.\n"
+                                                              "All of the pixels should be blue. If you see a black\n"
+                                                              "pixel, this indicates a missing blue subpixel.\n"

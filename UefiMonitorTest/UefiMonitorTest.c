@@ -11,10 +11,12 @@
 #include "UefiMonitorTest.h"
 #include "MainMenu.h"
 #include "SettingsMenu.h"
+#include "tests/SolidColors.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
-  { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue }
+  { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue },
+  { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue }
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
