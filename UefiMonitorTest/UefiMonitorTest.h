@@ -12,6 +12,7 @@ typedef struct {
   VOID (*Init)(UMT_CONTEXT *);
   VOID (*Doit)(UMT_CONTEXT *);
   VOID (*Tip)(UMT_CONTEXT *);
+  VOID (*ChangeParam)(UMT_CONTEXT *, INT8);
   VOID (*ChangeValue)(UMT_CONTEXT *, INT8);
 } UMT_STATE_ACTIONS;
 

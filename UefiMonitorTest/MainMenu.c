@@ -87,6 +87,15 @@ MainMenuTip (
 }
 
 VOID
+MainMenuChangeParam (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ParamStep
+  )
+{
+  
+}
+
+VOID
 MainMenuChangeValue (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ValueStep
