@@ -12,9 +12,7 @@ typedef struct {
   VOID (*Init)(UMT_CONTEXT *);
   VOID (*Doit)(UMT_CONTEXT *);
   VOID (*Tip)(UMT_CONTEXT *);
-
-  VOID (*KeyRight)(UMT_CONTEXT *);
-  VOID (*KeyLeft)(UMT_CONTEXT *);
+  VOID (*ChangeValue)(UMT_CONTEXT *, INT8);
 } UMT_STATE_ACTIONS;
 
 enum UMT_STATE {

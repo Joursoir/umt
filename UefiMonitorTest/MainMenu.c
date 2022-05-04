@@ -87,17 +87,10 @@ MainMenuTip (
 }
 
 VOID
-MainMenuKeyRight (
-  IN UMT_CONTEXT *Ctx
+MainMenuChangeValue (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ValueStep
   )
 {
-
-}
-
-VOID
-MainMenuKeyLeft (
-  IN UMT_CONTEXT *Ctx
-  )
-{
-
+  
 }

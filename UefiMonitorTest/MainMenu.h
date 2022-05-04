@@ -19,13 +19,9 @@ MainMenuTip (
   );
 
 VOID
-MainMenuKeyRight (
-  IN UMT_CONTEXT *Ctx
-  );
-
-VOID
-MainMenuKeyLeft (
-  IN UMT_CONTEXT *Ctx
+MainMenuChangeValue (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ValueStep
   );
 
 #endif /* UMT_MAIN_MENU_H */

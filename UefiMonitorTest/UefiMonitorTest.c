@@ -12,7 +12,7 @@
 #include "MainMenu.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
-  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuKeyRight, MainMenuKeyLeft }
+  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeValue }
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
@@ -152,11 +152,11 @@ HandleInput (
       break;
 
     case SCAN_RIGHT:
-      Ctx->Actions->KeyRight (Ctx);
+      Ctx->Actions->ChangeValue (Ctx, +1);
       break;
 
     case SCAN_LEFT:
-      Ctx->Actions->KeyLeft (Ctx);
+      Ctx->Actions->ChangeValue (Ctx, -1);
       break;
 
     case SCAN_F1...SCAN_F11:
