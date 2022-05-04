@@ -10,9 +10,11 @@
 
 #include "UefiMonitorTest.h"
 #include "MainMenu.h"
+#include "SettingsMenu.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
-  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue }
+  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
+  { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue }
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
@@ -167,6 +169,7 @@ HandleInput (
       break;
 
     case SCAN_F12:
+      ChangeCtxState (Ctx, UMT_STATE_SETTINGS);
       break;
 
     case SCAN_ESC:

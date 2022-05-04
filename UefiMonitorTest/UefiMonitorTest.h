@@ -18,6 +18,7 @@ typedef struct {
 
 enum UMT_STATE {
   UMT_STATE_MAIN_MENU = 0,
+  UMT_STATE_SETTINGS,
   UMT_STATE_END
 };
 
