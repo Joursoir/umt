@@ -94,7 +94,7 @@ SolidColorsTestChangeValue (
     CurrentColor = UMT_COLOR_BLUE;
   else {
     CurrentColor += ValueStep;
-    if (CurrentColor >= UMT_COLOR_BLUE)
+    if (CurrentColor > UMT_COLOR_BLUE)
       CurrentColor = 0;
   }
 
