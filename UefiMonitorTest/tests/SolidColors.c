@@ -13,7 +13,7 @@ SolidColorsTestInit (
 {
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  PutRect (Graphics, 0, 0, Graphics->Width, Graphics->Height, &gUmtColors[CurrentColor]);
+  PutRect (Graphics, 0, 0, Graphics->Width, Graphics->Height, &gUmtColors[CurrentColor].Color);
   if (Ctx->ShowTip)
     SolidColorsTestTip (Ctx);
 } 
@@ -41,7 +41,7 @@ SolidColorsTestTip (
 
   if (Ctx->ShowTip == FALSE) {
     // Restore
-    PutRect (Graphics, 15, Graphics->Height - 15 - 104, 470, Graphics->Height - 15, &gUmtColors[CurrentColor]);
+    PutRect (Graphics, 15, Graphics->Height - 15 - 104, 470, Graphics->Height - 15, &gUmtColors[CurrentColor].Color);
     return;
   }
 
@@ -76,9 +76,9 @@ SolidColorsTestTip (
   Msg = HiiGetString (gUmtHiiHandle, MsgToken, NULL);
 
   DrawRectWithBorder (Graphics, 15, Graphics->Height - 15 - 104, 470, Graphics->Height - 15,
-    3, &gUmtColors[UMT_COLOR_WHITE], &gUmtColors[UMT_COLOR_NAVY]);
-  DrawStringF (Graphics, 25, Graphics->Height - 15 - 94, &gUmtColors[UMT_COLOR_NAVY], Title);
-  DrawStringF (Graphics, 25, Graphics->Height - 15 - 74, &gUmtColors[UMT_COLOR_BLACK], Msg);
+    3, &gUmtColors[UMT_COLOR_WHITE].Color, &gUmtColors[UMT_COLOR_NAVY].Color);
+  DrawStringF (Graphics, 25, Graphics->Height - 15 - 94, &gUmtColors[UMT_COLOR_NAVY].Color, Title);
+  DrawStringF (Graphics, 25, Graphics->Height - 15 - 74, &gUmtColors[UMT_COLOR_BLACK].Color, Msg);
 
   FreePool (Title);
   FreePool (Msg);

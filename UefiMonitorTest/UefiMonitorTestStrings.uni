@@ -2,6 +2,25 @@
 
 #string STR_NULL_STRING                       #language en-US  " "
 
+//          Colors
+
+#string STR_COLOR_BLACK                       #language en-US "Black"
+#string STR_COLOR_WHITE                       #language en-US "White"
+#string STR_COLOR_RED                         #language en-US "Red"
+#string STR_COLOR_LIME                        #language en-US "Lime"
+#string STR_COLOR_BLUE                        #language en-US "Blue"
+#string STR_COLOR_YELLOW                      #language en-US "Yellow"
+#string STR_COLOR_AQUA                        #language en-US "Aqua"
+#string STR_COLOR_MAGENTA                     #language en-US "Magenta"
+#string STR_COLOR_SILVER                      #language en-US "Silver"
+#string STR_COLOR_GRAY                        #language en-US "Gray"
+#string STR_COLOR_MAROON                      #language en-US "Maroon"
+#string STR_COLOR_OLIVE                       #language en-US "Olive"
+#string STR_COLOR_GREEN                       #language en-US "Green"
+#string STR_COLOR_PURPLE                      #language en-US "Purple"
+#string STR_COLOR_TEAL                        #language en-US "Teal"
+#string STR_COLOR_NAVY                        #language en-US "Navy"
+
 //          Main Menu
 
 #string STR_MM_TITLE                          #language en-US "UEFI MONITOR TEST V%s"
