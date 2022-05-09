@@ -253,6 +253,7 @@ UefiMain (
   Status = Run (&Graphics);
 
   ForgetGraphicsInfo (&Graphics);
+  gST->ConOut->ClearScreen(gST->ConOut);
 
   UnregisterHiiPackage (gUmtHiiHandle);
 

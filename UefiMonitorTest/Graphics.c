@@ -131,10 +131,10 @@ PrepareGraphicsInfo (
   DEBUG ((
     DEBUG_INFO,
     "GOP information:\n"
-    "Mode: %d\n"
+    "Mode: %d/%d\n"
     "Framebuffer address, size: %x, %d\n"
     "Screen width x height: %d x %d\n",
-    Gop->Mode->Mode,
+    Gop->Mode->Mode, Gop->Mode->MaxMode,
     Gop->Mode->FrameBufferBase, Gop->Mode->FrameBufferSize,
     Gop->Mode->Info->HorizontalResolution, Gop->Mode->Info->VerticalResolution
     ));
