@@ -15,19 +15,6 @@
     C = A;                                                          \
     A = B;                                                          \
     B = C
-
-#define GET_ICOLOR(Graphics, Ucolor)                                \
-    (UINT32)(                                                       \
-    (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) & \
-     Graphics->PixelMasks.RedMask) |                                \
-    (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) & \
-     Graphics->PixelMasks.GreenMask) |                              \
-    (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) & \
-     Graphics->PixelMasks.BlueMask)                                 \
-    )
-
-#define CONVEX (UINT32)(2)
-
 CONST EFI_PIXEL_BITMASK mRgbPixelMasks = {
   0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000
 };
@@ -143,10 +130,10 @@ PrepareGraphicsInfo (
   DEBUG ((
     DEBUG_INFO,
     "GOP information:\n"
-    "Mode: %d\n"
+    "Mode: %d/%d\n"
     "Framebuffer address, size: %x, %d\n"
     "Screen width x height: %d x %d\n",
-    Gop->Mode->Mode,
+    Gop->Mode->Mode, Gop->Mode->MaxMode,
     Gop->Mode->FrameBufferBase, Gop->Mode->FrameBufferSize,
     Gop->Mode->Info->HorizontalResolution, Gop->Mode->Info->VerticalResolution
     ));
@@ -235,6 +222,33 @@ ForgetGraphicsInfo (
 }
 
 /**
+  Get a color that doesn't depend on pixel format, i.e.
+  independent color.
+
+  @param[in] Graphics               A graphics context.
+  @param[in] Ucolor                 A GRAPHICS_PIXEL_COLOR, which is
+                                    represented as unsigned 32-bit.
+
+  @retval  UINT32                   A color in independent format.
+**/
+UINT32
+GetIcolor (
+  IN  GRAPHICS_CONTEXT  *Graphics,
+  IN  UINT32            Ucolor
+  )
+{
+  return (UINT32)(
+    (((Ucolor << Graphics->PixelShl[0]) >> Graphics->PixelShr[0]) &
+     Graphics->PixelMasks.RedMask) |
+    (((Ucolor << Graphics->PixelShl[1]) >> Graphics->PixelShr[1]) &
+     Graphics->PixelMasks.GreenMask) |
+    (((Ucolor << Graphics->PixelShl[2]) >> Graphics->PixelShr[2]) &
+     Graphics->PixelMasks.BlueMask)
+    );
+}
+
+
+/**
   Draw a line using Bresenham's algorithm
 
   @retval  VOID
@@ -257,7 +271,6 @@ DrawLine (
   INT8    Direction;
   UINTN   X, Y, Z;
   BOOLEAN Reverse;
-  UINT32  Ucolor;
   UINT32  Icolor;
 
   ASSERT (X0 >= 0 && X0 < Graphics->Width);
@@ -287,8 +300,7 @@ DrawLine (
   AbsDeltaY = ABS (DeltaY) * 2;
   Correction = 0;
   Direction = (Y1 > Y0) ? 1 : -1;
-  Ucolor = *(UINT32 *)Color;
-  Icolor = GET_ICOLOR (Graphics, Ucolor);
+  Icolor = GetIcolor (Graphics, GET_UCOLOR (Color));
 
   Y = Y0;
   for (X = X0; X <= X1; X++) {
@@ -317,7 +329,6 @@ PutRect (
   )
 {
   UINT32 *Buffer;
-  UINT32 Ucolor;
   UINT32 Icolor;
   UINT32 I, J;
 
@@ -327,8 +338,7 @@ PutRect (
   ASSERT (Y1 >= 0 && Y1 <= Graphics->Height && Y1 >= Y0);
 
   Buffer = Graphics->BackBuffer + Y0 * Graphics->Pitch;
-  Ucolor = *(UINT32 *)Color;
-  Icolor = GET_ICOLOR(Graphics, Ucolor);
+  Icolor = GetIcolor (Graphics, GET_UCOLOR (Color));
 
   for (J = Y0; J < Y1; J++) {
     for (I = X0; I < X1; I++) {
@@ -398,7 +408,6 @@ DrawCircle (
   )
 {
   UINT32 *Buffer;
-  UINT32 Ucolor;
   UINT32 Icolor;
   UINT32 I, J;
 
@@ -408,8 +417,7 @@ DrawCircle (
   ASSERT ((X0 + R) < Graphics->Width && X0 >= R);
   ASSERT ((Y0 + R) < Graphics->Height && Y0 >= R);
 
-  Ucolor = *(UINT32 *)Color;
-  Icolor = GET_ICOLOR(Graphics, Ucolor);
+  Icolor = GetIcolor (Graphics, GET_UCOLOR (Color));
   Buffer = Graphics->BackBuffer + (Y0 - R) * Graphics->Pitch;
 
   for (J = (Y0 - R); J <= (Y0 + R); J++) {
@@ -488,7 +496,6 @@ DrawStringVF (
   UINTN   Length;
   UINTN   Index;
   UINTN   OldX;
-  UINT32  Ucolor;
   UINT32  Icolor;
 
   ASSERT(FormatString != NULL);
@@ -501,8 +508,7 @@ DrawStringVF (
   Length = UnicodeVSPrint(FormatWalker, WalkerSize, FormatString, Marker);
   Index  = 0;
   OldX   = X;
-  Ucolor = *(UINT32 *)Color;
-  Icolor = GET_ICOLOR (Graphics, Ucolor);
+  Icolor = GetIcolor (Graphics, GET_UCOLOR (Color));
 
   while (FormatWalker[Index] != '\0' && Index < Length) {
     switch (FormatWalker[Index]) {

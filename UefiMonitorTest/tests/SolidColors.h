@@ -1,33 +1,33 @@
-#ifndef UMT_MAIN_MENU_H
-#define UMT_MAIN_MENU_H
+#ifndef UMT_SOLID_COLORS_TEST_H
+#define UMT_SOLID_COLORS_TEST_H
 
 #include "UefiMonitorTest.h"
 
 VOID
-MainMenuInit (
+SolidColorsTestInit (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuDoit (
+SolidColorsTestDoit (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuTip (
+SolidColorsTestTip (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuChangeParam (
+SolidColorsTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ParamStep
   );
 
 VOID
-MainMenuChangeValue (
+SolidColorsTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ValueStep
   );
 
-#endif /* UMT_MAIN_MENU_H */
+#endif /* UMT_SOLID_COLORS_TEST_H */

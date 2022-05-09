@@ -10,9 +10,13 @@
 
 #include "UefiMonitorTest.h"
 #include "MainMenu.h"
+#include "SettingsMenu.h"
+#include "tests/SolidColors.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
-  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuKeyRight, MainMenuKeyLeft }
+  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
+  { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue },
+  { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue }
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
@@ -148,21 +152,27 @@ HandleInput (
 
   switch (KeyData.Key.ScanCode) {
     case SCAN_UP:
+      Ctx->Actions->ChangeParam (Ctx, -1);
+      break;
+
     case SCAN_DOWN:
+      Ctx->Actions->ChangeParam (Ctx, +1);
       break;
 
     case SCAN_RIGHT:
-      Ctx->Actions->KeyRight (Ctx);
+      Ctx->Actions->ChangeValue (Ctx, +1);
       break;
 
     case SCAN_LEFT:
-      Ctx->Actions->KeyLeft (Ctx);
+      Ctx->Actions->ChangeValue (Ctx, -1);
       break;
 
     case SCAN_F1...SCAN_F11:
+      ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F1 + UMT_STATE_SOLID_COLORS_TEST);
       break;
 
     case SCAN_F12:
+      ChangeCtxState (Ctx, UMT_STATE_SETTINGS);
       break;
 
     case SCAN_ESC:
@@ -178,7 +188,7 @@ HandleInput (
       break;
   }
 
-  if (KeyData.Key.ScanCode == NULL && KeyData.Key.UnicodeChar == L' ') {
+  if (KeyData.Key.ScanCode == SCAN_NULL && KeyData.Key.UnicodeChar == L' ') {
     Ctx->ShowTip = !Ctx->ShowTip;
     Ctx->Actions->Tip (Ctx);
   }
@@ -243,6 +253,7 @@ UefiMain (
   Status = Run (&Graphics);
 
   ForgetGraphicsInfo (&Graphics);
+  gST->ConOut->ClearScreen(gST->ConOut);
 
   UnregisterHiiPackage (gUmtHiiHandle);
 

@@ -11,6 +11,8 @@
   UefiMonitorTest.c
   Graphics.c
   MainMenu.c
+  SettingsMenu.c
+  tests/SolidColors.c
   UefiMonitorTestStrings.uni
 
 [Packages]

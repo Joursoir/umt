@@ -1,33 +1,33 @@
-#ifndef UMT_MAIN_MENU_H
-#define UMT_MAIN_MENU_H
+#ifndef UMT_SETTINGS_MENU_H
+#define UMT_SETTINGS_MENU_H
 
 #include "UefiMonitorTest.h"
 
 VOID
-MainMenuInit (
+SettingsMenuInit (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuDoit (
+SettingsMenuDoit (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuTip (
+SettingsMenuTip (
   IN UMT_CONTEXT *Ctx
   );
 
 VOID
-MainMenuChangeParam (
+SettingsChangeParam (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ParamStep
   );
 
 VOID
-MainMenuChangeValue (
+SettingsMenuChangeValue (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ValueStep
   );
 
-#endif /* UMT_MAIN_MENU_H */
+#endif /* UMT_SETTINGS_MENU_H */

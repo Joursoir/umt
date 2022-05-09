@@ -4,19 +4,22 @@
 
 #include "Graphics.h"
 
+#define UMT_VERSION L"0.1.0"
+
 typedef struct _UMT_CONTEXT UMT_CONTEXT;
 
 typedef struct {
   VOID (*Init)(UMT_CONTEXT *);
   VOID (*Doit)(UMT_CONTEXT *);
   VOID (*Tip)(UMT_CONTEXT *);
-
-  VOID (*KeyRight)(UMT_CONTEXT *);
-  VOID (*KeyLeft)(UMT_CONTEXT *);
+  VOID (*ChangeParam)(UMT_CONTEXT *, INT8);
+  VOID (*ChangeValue)(UMT_CONTEXT *, INT8);
 } UMT_STATE_ACTIONS;
 
 enum UMT_STATE {
   UMT_STATE_MAIN_MENU = 0,
+  UMT_STATE_SETTINGS,
+  UMT_STATE_SOLID_COLORS_TEST,
   UMT_STATE_END
 };
 
