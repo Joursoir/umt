@@ -13,7 +13,7 @@
   MainMenu.c
   SettingsMenu.c
   tests/SolidColors.c
-  tests/ColoredLines.c
+  tests/Gradients.c
   UefiMonitorTestStrings.uni
 
 [Packages]

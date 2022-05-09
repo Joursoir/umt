@@ -12,13 +12,13 @@
 #include "MainMenu.h"
 #include "SettingsMenu.h"
 #include "tests/SolidColors.h"
-#include "tests/ColoredLines.h"
+#include "tests/Gradients.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
   { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue },
   { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue },
-  { ColoredLinesTestInit, ColoredLinesTestDoit, ColoredLinesTestTip, ColoredLinesTestChangeParam, ColoredLinesTestChangeValue }
+  { GradientsTestInit, GradientsTestDoit, GradientsTestTip, GradientsTestChangeParam, GradientsTestChangeValue }
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
@@ -171,7 +171,7 @@ HandleInput (
 
     case SCAN_F1...SCAN_F11:
       ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F1 + UMT_STATE_SOLID_COLORS_TEST);
-      ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F2 + UMT_STATE_COLORED_LINES_TEST);
+      ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F2 + UMT_STATE_GRADIENTS_TEST);
       break;
 
     case SCAN_F12:
