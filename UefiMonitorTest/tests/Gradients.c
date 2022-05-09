@@ -4,6 +4,16 @@
 
 #include "Gradients.h"
 
+enum UMT_STEPS {
+  UMT_STEP_256 = 0,
+  UMT_STEP_128,
+  UMT_STEP_64,
+  UMT_STEP_32,
+  UMT_STEP_16,
+  UMT_STEP_8,
+  UMT_STEP_END
+};
+
 STATIC enum UMT_COLORS CurrentColor = 1;
 STATIC enum UMT_STEPS CurrentStep = 0;
 
@@ -23,9 +33,9 @@ GradientsTestInit (
 {
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  STATIC UINT32 Index = 0;
-  STATIC GRAPHICS_PIXEL_COLOR ColorOutput = {0x00, 0x00, 0x00, 0x00};
-  STATIC GRAPHICS_PIXEL_COLOR ColorInc = {0x00, 0x00, 0x00, 0x00};
+  UINT32 Index;
+  GRAPHICS_PIXEL_COLOR ColorOutput = {0x00};
+  GRAPHICS_PIXEL_COLOR ColorInc = {0x00};
 
   ColorOutput.Red = 0;
   ColorOutput.Green = 0;
@@ -37,7 +47,11 @@ GradientsTestInit (
 
   for (Index = 0; Index < gUmtSteps[CurrentStep]; Index++)
   {
-    PutRect(Graphics, (Graphics->Width * Index) / gUmtSteps[CurrentStep], 0, ((Graphics->Width * (Index + 1)) / gUmtSteps[CurrentStep]), Graphics->Height, &ColorOutput);
+    PutRect(Graphics, (Graphics->Width * Index) / gUmtSteps[CurrentStep], \
+    0,                                                                    \
+    ((Graphics->Width * (Index + 1)) / gUmtSteps[CurrentStep]),           \
+    Graphics->Height,                                                     \
+     &ColorOutput);
     ColorOutput.Red += ColorInc.Red;
     ColorOutput.Green += ColorInc.Green;
     ColorOutput.Blue += ColorInc.Blue;

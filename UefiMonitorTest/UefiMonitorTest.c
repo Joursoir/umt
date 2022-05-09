@@ -171,7 +171,6 @@ HandleInput (
 
     case SCAN_F1...SCAN_F11:
       ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F1 + UMT_STATE_SOLID_COLORS_TEST);
-      ChangeCtxState (Ctx, KeyData.Key.ScanCode - SCAN_F2 + UMT_STATE_GRADIENTS_TEST);
       break;
 
     case SCAN_F12:
