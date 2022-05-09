@@ -32,9 +32,8 @@ SolidColorsTestTip (
   )
 {
   GRAPHICS_CONTEXT *Graphics;
-  EFI_STRING_ID     TitleToken;
   EFI_STRING_ID     MsgToken;
-  CHAR16            *Title;
+  CHAR16            *ColorName;
   CHAR16            *Msg;
 
   Graphics = Ctx->Graphics;
@@ -45,26 +44,20 @@ SolidColorsTestTip (
     return;
   }
 
-  // TODO: or use CatSPrint()?
   switch (CurrentColor) {
     case UMT_COLOR_BLACK:
-      TitleToken = STRING_TOKEN (STR_SOLID_COLORS_BLACK_TITLE);
       MsgToken = STRING_TOKEN (STR_SOLID_COLORS_BLACK_MSG);
       break;
     case UMT_COLOR_WHITE:
-      TitleToken = STRING_TOKEN (STR_SOLID_COLORS_WHITE_TITLE);
       MsgToken = STRING_TOKEN (STR_SOLID_COLORS_WHITE_MSG);
       break;
     case UMT_COLOR_RED:
-      TitleToken = STRING_TOKEN (STR_SOLID_COLORS_RED_TITLE);
       MsgToken = STRING_TOKEN (STR_SOLID_COLORS_RED_MSG);
       break;
     case UMT_COLOR_LIME:
-      TitleToken = STRING_TOKEN (STR_SOLID_COLORS_GREEN_TITLE);
       MsgToken = STRING_TOKEN (STR_SOLID_COLORS_GREEN_MSG);
       break;
     case UMT_COLOR_BLUE:
-      TitleToken = STRING_TOKEN (STR_SOLID_COLORS_BLUE_TITLE);
       MsgToken = STRING_TOKEN (STR_SOLID_COLORS_BLUE_MSG);
       break;
     default:
@@ -72,15 +65,21 @@ SolidColorsTestTip (
       break;
   }
 
-  Title = HiiGetString (gUmtHiiHandle, TitleToken, NULL);
-  Msg = HiiGetString (gUmtHiiHandle, MsgToken, NULL);
+  ColorName = HiiGetString (gUmtHiiHandle, gUmtColors[CurrentColor].StringId, NULL);
+  Msg       = HiiGetString (gUmtHiiHandle, MsgToken, NULL);
 
   DrawRectWithBorder (Graphics, 15, Graphics->Height - 15 - 104, 470, Graphics->Height - 15,
     3, &gUmtColors[UMT_COLOR_WHITE].Color, &gUmtColors[UMT_COLOR_NAVY].Color);
-  DrawStringF (Graphics, 25, Graphics->Height - 15 - 94, &gUmtColors[UMT_COLOR_NAVY].Color, Title);
+  
+  DrawHiiStringF (Graphics, 
+                  25,
+                  Graphics->Height - 15 - 94, 
+                  &gUmtColors[UMT_COLOR_NAVY].Color,
+                  STRING_TOKEN (STR_SOLID_COLORS_TITLE), gUmtHiiHandle,
+                  ColorName);
   DrawStringF (Graphics, 25, Graphics->Height - 15 - 74, &gUmtColors[UMT_COLOR_BLACK].Color, Msg);
 
-  FreePool (Title);
+  FreePool (ColorName);
   FreePool (Msg);
 }
 
