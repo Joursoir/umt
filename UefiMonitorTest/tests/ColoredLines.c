@@ -23,7 +23,6 @@ ColoredLinesTestInit (
 {
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  //STATIC UINT32 X = 8;
   STATIC UINT32 Index = 0;
   STATIC GRAPHICS_PIXEL_COLOR ColorOutput = {0x00, 0x00, 0x00, 0x00};
   STATIC GRAPHICS_PIXEL_COLOR ColorInc = {0x00, 0x00, 0x00, 0x00};
