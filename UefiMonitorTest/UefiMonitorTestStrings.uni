@@ -57,3 +57,39 @@
 #string STR_SOLID_COLORS_BLUE_MSG             #language en-US "Check if there are any defective pixels on the monitor.\n"
                                                               "All of the pixels should be blue. If you see a black\n"
                                                               "pixel, this indicates a missing blue subpixel.\n"
+
+#string STR_COLORED_LINES_TITLE		      #language en-US "GRADIENTS"
+
+#string STR_COLORED_LINES_MSG		      #language en-US "The grayscale image should be reproduced in the overall\n" 
+							      "view without any unnecessary color and with an even\n" 
+							      "gradient, and, at 256 intervals, there should not be any\n" 
+							      "noticeable abrupt changes in brightness between individual\n"  
+							      "grayscales. At a smaller number of intervals, the respective\n" 
+							      "bars should be clearly differentiable from one another.\n"
+							      "Color at the right edge of the image"
+
+#string STR_COLORED_LINES_WHITE               #language en-US "Color: White"
+
+#string STR_COLORED_LINES_RED                 #language en-US "Color: Red"
+
+#string STR_COLORED_LINES_GREEN               #language en-US "Color: Green"
+
+#string STR_COLORED_LINES_BLUE                #language en-US "Color: Blue"
+
+#string STR_COLORED_LINES_YELLOW              #language en-US "Color: Yellow"
+
+#string STR_COLORED_LINES_AQUA                #language en-US "Color: Aqua"
+
+#string STR_COLORED_LINES_MAGENTA             #language en-US "Color: Magenta"
+
+#string STR_COLORED_LINES_STEP_256	      #language en-US "Steps: 256"
+
+#string STR_COLORED_LINES_STEP_128            #language en-US "Steps: 128"
+
+#string STR_COLORED_LINES_STEP_64             #language en-US "Steps: 64"
+
+#string STR_COLORED_LINES_STEP_32             #language en-US "Steps: 32"
+
+#string STR_COLORED_LINES_STEP_16             #language en-US "Steps: 16"
+
+#string STR_COLORED_LINES_STEP_8              #language en-US "Steps: 8"
