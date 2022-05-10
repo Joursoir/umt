@@ -101,7 +101,12 @@ enum UMT_COLORS {
   UMT_COLOR_END
 };
 
-extern CONST GRAPHICS_PIXEL_COLOR gUmtColors[];
+typedef struct {
+  EFI_STRING_ID         StringId;
+  GRAPHICS_PIXEL_COLOR  Color;
+} UMT_COLORS;
+
+extern CONST UMT_COLORS gUmtColors[];
 
 EFI_STATUS
 PrepareGraphicsInfo (

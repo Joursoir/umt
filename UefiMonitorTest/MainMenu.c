@@ -31,11 +31,11 @@ MainMenuInit (
   RightColX  = MiddleColX + (CHAR_PER_COLUMN * FontWidth);
 
   // Background
-  PutRect (Graphics, 0, 0, Width, Height, &gUmtColors[UMT_COLOR_NAVY]);
+  PutRect (Graphics, 0, 0, Width, Height, &gUmtColors[UMT_COLOR_NAVY].Color);
   DrawHiiStringF (Graphics,
                   (Width - 24 * FontWidth) / 2,
                   Height / 2 - RECT_HALF_HEIGHT - (INDENT * 2),
-                  &gUmtColors[UMT_COLOR_WHITE],
+                  &gUmtColors[UMT_COLOR_WHITE].Color,
                   STRING_TOKEN (STR_MM_TITLE), gUmtHiiHandle, UMT_VERSION);
 
   // Menu
@@ -45,27 +45,27 @@ MainMenuInit (
                   Width  / 2 + RECT_HALF_WIDTH,
                   Height / 2 + RECT_HALF_HEIGHT,
                   20,
-                  &gUmtColors[UMT_COLOR_WHITE]
+                  &gUmtColors[UMT_COLOR_WHITE].Color
                   );
   
   Y = Height / 2 - RECT_HALF_HEIGHT + INDENT + 5;
-  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_SUBTITLE), gUmtHiiHandle);
 
   Y += FontHeight + INDENT;
-  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_MENU), gUmtHiiHandle);
 
   Y += (FontHeight * 4) + (INDENT * 2);
-  DrawHiiStringF (Graphics, (Width - 9 * FontWidth) / 2, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, (Width - 9 * FontWidth) / 2, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_TIP_TITLE), gUmtHiiHandle);
 
   Y += FontHeight + INDENT;
-  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, LeftColX, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_TIP_FIRST), gUmtHiiHandle);
-  DrawHiiStringF (Graphics, MiddleColX, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, MiddleColX, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_TIP_SECOND), gUmtHiiHandle);
-  DrawHiiStringF (Graphics, RightColX, Y, &gUmtColors[UMT_COLOR_BLACK],
+  DrawHiiStringF (Graphics, RightColX, Y, &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_MM_TIP_THIRD), gUmtHiiHandle);
 
 }
