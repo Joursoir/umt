@@ -83,21 +83,6 @@
                                                               "grayscales. At a smaller number of intervals, the respective\n" 
                                                               "bars should be clearly differentiable from one another.\n"
                                                               "Color at the right edge of the image"
-
-#string STR_GRADIENTS_WHITE                   #language en-US "Color: White"
-
-#string STR_GRADIENTS_RED                     #language en-US "Color: Red"
-
-#string STR_GRADIENTS_GREEN                   #language en-US "Color: Green"
-
-#string STR_GRADIENTS_BLUE                    #language en-US "Color: Blue"
-
-#string STR_GRADIENTS_YELLOW                  #language en-US "Color: Yellow"
-
-#string STR_GRADIENTS_AQUA                    #language en-US "Color: Aqua"
-
-#string STR_GRADIENTS_MAGENTA                 #language en-US "Color: Magenta"
-
 #string STR_GRADIENTS_STEP_256                #language en-US "Steps: 256"
 
 #string STR_GRADIENTS_STEP_128                #language en-US "Steps: 128"
