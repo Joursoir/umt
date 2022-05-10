@@ -194,12 +194,3 @@ GradientsTestChangeParam (
     }
   }
 }
-
-VOID
-GradientsTestChangeVar (
-  IN  UMT_CONTEXT *Ctx,
-  IN  INT8        VariableStep
-  )
-{
-
-}

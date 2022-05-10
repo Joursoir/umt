@@ -74,6 +74,8 @@
                                                               "All of the pixels should be blue. If you see a black\n"
                                                               "pixel, this indicates a missing blue subpixel.\n"
 
+//          Test "Gradients"
+
 #string STR_GRADIENTS_TITLE                   #language en-US "GRADIENTS"
 
 #string STR_GRADIENTS_MSG                     #language en-US "The grayscale image should be reproduced in the overall\n" 
@@ -83,6 +85,7 @@
                                                               "grayscales. At a smaller number of intervals, the respective\n" 
                                                               "bars should be clearly differentiable from one another.\n"
                                                               "Color at the right edge of the image"
+
 #string STR_GRADIENTS_STEP_256                #language en-US "Steps: 256"
 
 #string STR_GRADIENTS_STEP_128                #language en-US "Steps: 128"
