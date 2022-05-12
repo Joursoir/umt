@@ -81,13 +81,13 @@ GrayscaleTestChangeValue (
   IN  INT8        ValueStep
   )
 {
-  if (CurrentGrayTone == 0 && ValueStep < 0) {
+  if (CurrentGrayTone == 5 && ValueStep < 0) {
     return;
   } else {
     CurrentGrayTone += ValueStep * 5;
-    if (CurrentGrayTone > 100)
+    if (CurrentGrayTone > 95)
     {
-      CurrentGrayTone = 100;
+      CurrentGrayTone = 95;
       return;
     }
   }
