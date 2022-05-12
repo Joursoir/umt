@@ -14,6 +14,7 @@
   SettingsMenu.c
   tests/SolidColors.c
   tests/Gradients.c
+  tests/Grayscale.c
   UefiMonitorTestStrings.uni
 
 [Packages]
