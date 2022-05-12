@@ -5,9 +5,8 @@ A monitor diagnostic and testing tool. It includes several tests that should all
 ## Tests
 
 * Solid colors
-* Colored lines
-* Grayscale 
-* Mesh field
+* Grayscale
+* Gradients
 * Chess board 
 
 ## Installation
