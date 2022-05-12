@@ -49,6 +49,14 @@
                                                               "the test or exit from\n"
                                                               "application."
 
+//          Settings Menu
+
+#string STR_SM_TITLE                          #language en-US "SETTINGS MENU"
+
+#string STR_SM_RESOLUTION_TITLE               #language en-US "Resolution:"
+
+#string STR_SM_RESOLUTION_OPTION              #language en-US "<  %4d x %4d%c >"
+
 //          Test "Solid Colors"
 
 #string STR_SOLID_COLORS_TITLE                #language en-US "DEFECTIVE PIXELS ON %s"
