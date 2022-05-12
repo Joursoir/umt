@@ -13,8 +13,9 @@
   MainMenu.c
   SettingsMenu.c
   tests/SolidColors.c
-  tests/Gradients.c
   tests/Grayscale.c
+  tests/Gradients.c
+  tests/ChessBoard.c
   UefiMonitorTestStrings.uni
 
 [Packages]

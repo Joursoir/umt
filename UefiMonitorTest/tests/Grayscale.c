@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <Library/DebugLib.h>
 #include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
@@ -6,11 +7,16 @@
 
 STATIC UINT32 CurrentGrayTone = 50;
 
+=======
+#include "Grayscale.h"
+
+>>>>>>> origin/master
 VOID
 GrayscaleTestInit (
   IN UMT_CONTEXT *Ctx
   )
 {
+<<<<<<< HEAD
   GRAPHICS_PIXEL_COLOR ColorOutput = { 0x00 };
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
@@ -28,6 +34,9 @@ GrayscaleTestInit (
   if (Ctx->ShowTip) {
     GrayscaleTestTip (Ctx);
   }
+=======
+
+>>>>>>> origin/master
 }
 
 VOID
@@ -43,6 +52,7 @@ GrayscaleTestTip (
   IN UMT_CONTEXT *Ctx
   )
 {
+<<<<<<< HEAD
   GRAPHICS_CONTEXT *Graphics;
 
   Graphics = Ctx->Graphics;
@@ -99,6 +109,24 @@ VOID
 GrayscaleTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
   IN  INT8        ParamStep
+=======
+
+}
+
+VOID
+GrayscaleTestChangeParam (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ParamStep
+  )
+{
+
+}
+
+VOID
+GrayscaleTestChangeValue (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ValueStep
+>>>>>>> origin/master
   )
 {
 
