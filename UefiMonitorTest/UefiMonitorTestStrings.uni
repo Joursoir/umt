@@ -87,15 +87,3 @@
                                                               "\n"
                                                               "Color%c: %s\n"
                                                               "Steps%c: %d\n"
-
-#string STR_GRADIENTS_STEP_256                #language en-US "Steps: 256"
-
-#string STR_GRADIENTS_STEP_128                #language en-US "Steps: 128"
-
-#string STR_GRADIENTS_STEP_64                 #language en-US "Steps: 64"
-
-#string STR_GRADIENTS_STEP_32                 #language en-US "Steps: 32"
-
-#string STR_GRADIENTS_STEP_16                 #language en-US "Steps: 16"
-
-#string STR_GRADIENTS_STEP_8                  #language en-US "Steps: 8"
