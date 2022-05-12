@@ -4,37 +4,27 @@
 
 #include "Gradients.h"
 
-enum UMT_STEPS {
-  UMT_STEP_256 = 0,
-  UMT_STEP_128,
-  UMT_STEP_64,
-  UMT_STEP_32,
-  UMT_STEP_16,
-  UMT_STEP_8,
-  UMT_STEP_END
+enum UMT_GRADIENTS_PARAM {
+  UMT_GRADIENTS_PARAM_COLOR = 0,
+  UMT_GRADIENTS_PARAM_STEP
 };
 
-enum UMT_PARAM {
-  UMT_PARAM_COLOR = 0,
-  UMT_PARAM_STEP
+enum UMT_GRADIENTS_STEPS {
+  UMT_GRADIENTS_STEP_8 = 0,
+  UMT_GRADIENTS_STEP_16,
+  UMT_GRADIENTS_STEP_32,
+  UMT_GRADIENTS_STEP_64,
+  UMT_GRADIENTS_STEP_128,
+  UMT_GRADIENTS_STEP_256,
+  UMT_GRADIENTS_STEP_END
 };
 
-STATIC enum UMT_COLORS CurrentColor = 1;
-STATIC enum UMT_STEPS CurrentStep = 0;
-STATIC enum UMT_PARAM CurrentParam = UMT_PARAM_COLOR;
+STATIC enum UMT_COLORS CurrentColor           = 1;
+STATIC enum UMT_GRADIENTS_STEPS CurrentStep   = UMT_GRADIENTS_STEP_8;
+STATIC enum UMT_GRADIENTS_PARAM CurrentParam  = UMT_GRADIENTS_PARAM_COLOR;
 
-typedef struct {
-  EFI_STRING_ID  StringId;
-  UINT32         Step;
-} UMT_STEPS;
-
-CONST UMT_STEPS gUmtSteps[UMT_STEP_END] = {
-  { STRING_TOKEN (STR_GRADIENTS_STEP_256),   256 },
-  { STRING_TOKEN (STR_GRADIENTS_STEP_128),   128 },
-  { STRING_TOKEN (STR_GRADIENTS_STEP_64),    64  },
-  { STRING_TOKEN (STR_GRADIENTS_STEP_32),    32  },
-  { STRING_TOKEN (STR_GRADIENTS_STEP_16),    16  },
-  { STRING_TOKEN (STR_GRADIENTS_STEP_8),     8   }
+CONST UINT32 mGradientsSteps[UMT_GRADIENTS_STEP_END] = {
+  8, 16, 32, 64, 128, 256
 };
 
 VOID
@@ -42,21 +32,20 @@ GradientsTestInit (
   IN UMT_CONTEXT *Ctx
   )
 {
-  GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
-
   UINT32 Index;
   GRAPHICS_PIXEL_COLOR ColorOutput = { 0x00 };
-  GRAPHICS_PIXEL_COLOR ColorInc = { 0x00 };
+  GRAPHICS_PIXEL_COLOR ColorInc    = { 0x00 };
+  GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  ColorInc.Red   = ((gUmtColors[CurrentColor].Color.Red) / (gUmtSteps[CurrentStep].Step-1));
-  ColorInc.Green = ((gUmtColors[CurrentColor].Color.Green) / (gUmtSteps[CurrentStep].Step-1));
-  ColorInc.Blue  = ((gUmtColors[CurrentColor].Color.Blue) / (gUmtSteps[CurrentStep].Step-1));
+  ColorInc.Red   = ((gUmtColors[CurrentColor].Color.Red) / (mGradientsSteps[CurrentStep]-1));
+  ColorInc.Green = ((gUmtColors[CurrentColor].Color.Green) / (mGradientsSteps[CurrentStep]-1));
+  ColorInc.Blue  = ((gUmtColors[CurrentColor].Color.Blue) / (mGradientsSteps[CurrentStep]-1));
 
-  for (Index = 0; Index < gUmtSteps[CurrentStep].Step; Index++)
+  for (Index = 0; Index < mGradientsSteps[CurrentStep]; Index++)
   {
-    PutRect (Graphics, (Graphics->Width * Index) / gUmtSteps[CurrentStep].Step,
+    PutRect (Graphics, (Graphics->Width * Index) / mGradientsSteps[CurrentStep],
                         0,
-                        ((Graphics->Width * (Index + 1)) / gUmtSteps[CurrentStep].Step),
+                        (Graphics->Width * (Index + 1)) / mGradientsSteps[CurrentStep],
                         Graphics->Height,
                         &ColorOutput);
 
@@ -64,8 +53,10 @@ GradientsTestInit (
     ColorOutput.Green += ColorInc.Green;
     ColorOutput.Blue  += ColorInc.Blue;
   }
-  if (Ctx->ShowTip)
+
+  if (Ctx->ShowTip) {
     GradientsTestTip (Ctx);
+  }
 }
 
 VOID
@@ -82,12 +73,8 @@ GradientsTestTip (
   )
 {
   GRAPHICS_CONTEXT *Graphics;
-  EFI_STRING_ID     TitleToken;
-  EFI_STRING_ID     MsgToken;
-  CHAR16            *Title;
-  CHAR16            *Msg;
-  CHAR16 	    *ColorMsg;
-  CHAR16            *StepMsg;
+  CHAR16           *ColorMsg;
+
   Graphics = Ctx->Graphics;
 
   if (Ctx->ShowTip == FALSE) {
@@ -96,13 +83,7 @@ GradientsTestTip (
     return;
   }
 
-  MsgToken = STRING_TOKEN (STR_GRADIENTS_MSG);
-  TitleToken = STRING_TOKEN (STR_GRADIENTS_TITLE);
-
-  Title    = HiiGetString (gUmtHiiHandle, TitleToken, NULL);
-  Msg      = HiiGetString (gUmtHiiHandle, MsgToken, NULL);
   ColorMsg = HiiGetString (gUmtHiiHandle, gUmtColors[CurrentColor].StringId, NULL);
-  StepMsg  = HiiGetString (gUmtHiiHandle, gUmtSteps[CurrentStep].StringId, NULL);
 
   DrawRectWithBorder (Graphics,
                       15,
@@ -112,33 +93,23 @@ GradientsTestTip (
                       &gUmtColors[UMT_COLOR_WHITE].Color,
                       &gUmtColors[UMT_COLOR_NAVY].Color);
 
-  DrawStringF (Graphics,
-               25,
-               Graphics->Height - 15 - 164,
-               &gUmtColors[UMT_COLOR_NAVY].Color, Title);
+  DrawHiiStringF (Graphics,
+                  25,
+                  Graphics->Height - 15 - 164,
+                  &gUmtColors[UMT_COLOR_NAVY].Color,
+                  STRING_TOKEN (STR_GRADIENTS_TITLE), gUmtHiiHandle);
 
-  DrawStringF (Graphics,
-               25,
-               Graphics->Height - 15 - 144,
-               &gUmtColors[UMT_COLOR_BLACK].Color,
-               Msg);
+  DrawHiiStringF (Graphics,
+                  25,
+                  Graphics->Height - 15 - 144,
+                  &gUmtColors[UMT_COLOR_BLACK].Color,
+                  STRING_TOKEN (STR_GRADIENTS_MSG), gUmtHiiHandle,
+                  (CurrentParam == UMT_GRADIENTS_PARAM_COLOR) ? L'*' : L' ',
+                  ColorMsg,
+                  (CurrentParam == UMT_GRADIENTS_PARAM_STEP) ? L'*' : L' ',
+                  mGradientsSteps[CurrentStep]);
 
-  DrawStringF (Graphics,
-               25,
-               Graphics->Height - 15 - 34,
-               &gUmtColors[UMT_COLOR_BLUE].Color,
-               ColorMsg);
-
-  DrawStringF (Graphics,
-               25,
-               Graphics->Height - 15 - 20,
-               &gUmtColors[UMT_COLOR_BLUE].Color,
-               StepMsg);
-
-  FreePool (Title);
-  FreePool (Msg);
   FreePool (ColorMsg);
-  FreePool (StepMsg);
 }
 
 VOID
@@ -148,33 +119,35 @@ GradientsTestChangeValue (
   )
 {
   switch (CurrentParam) {
-  case UMT_PARAM_COLOR:
-    if (CurrentColor == 1 && ValueStep < 0) {
+  case UMT_GRADIENTS_PARAM_COLOR:
+    if (CurrentColor == UMT_COLOR_WHITE && ValueStep < 0) {
       CurrentColor = UMT_COLOR_MAGENTA;
     } else {
       CurrentColor += ValueStep;
       if (CurrentColor > UMT_COLOR_MAGENTA) {
-        CurrentColor = 1;
+        CurrentColor = UMT_COLOR_WHITE;
       }
     }
     break;
 
-  case UMT_PARAM_STEP:
+  case UMT_GRADIENTS_PARAM_STEP:
     if (CurrentStep == 0 && ValueStep < 0) {
-      CurrentStep = UMT_STEP_8;
+      return;
     } else {
       CurrentStep += ValueStep;
-      if (CurrentStep > UMT_STEP_8)
+      if (CurrentStep > UMT_GRADIENTS_STEP_256)
       {
-        CurrentStep = 0;
+        CurrentStep = UMT_GRADIENTS_STEP_256;
+        return;
       }
     }
     break;
 
   default:
     ASSERT(FALSE);
-    break;
+    return;
   }
+
   GradientsTestInit (Ctx);
 }
 
@@ -185,12 +158,14 @@ GradientsTestChangeParam (
   )
 {
   if (CurrentParam == 0 && ParamStep < 0) {
-    CurrentParam = UMT_PARAM_STEP;
+    CurrentParam = UMT_GRADIENTS_PARAM_STEP;
   } else {
     CurrentParam += ParamStep;
-    if (CurrentParam > UMT_PARAM_STEP)
+    if (CurrentParam > UMT_GRADIENTS_PARAM_STEP)
     {
-      CurrentParam = UMT_PARAM_COLOR;
+      CurrentParam = UMT_GRADIENTS_PARAM_COLOR;
     }
   }
+
+  GradientsTestInit (Ctx);
 }
