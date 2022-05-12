@@ -12,12 +12,14 @@
 #include "MainMenu.h"
 #include "SettingsMenu.h"
 #include "tests/SolidColors.h"
+#include <tests/Grayscale.h>
 #include "tests/Gradients.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
   { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue },
   { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue },
+  { GrayscaleTestInit, GrayscaleTestDoit, GrayscaleTestTip, GrayscaleTestChangeParam, GrayscaleTestChangeValue },
   { GradientsTestInit, GradientsTestDoit, GradientsTestTip, GradientsTestChangeParam, GradientsTestChangeValue }
 };
 
