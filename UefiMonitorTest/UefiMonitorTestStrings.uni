@@ -100,9 +100,9 @@
 
 #string STR_GRAYSCALE_TITLE                   #language en-US "GRAYSCALE"
 
-#string STR_GRAYSCALE_MSG                     #language en-US "Assess the uniformity of the image using various grayscales.\n"
-                                                              "The brightness should be equally distributed \n"
-                                                              "across the entire image, and the image\n"
+#string STR_GRAYSCALE_MSG                     #language en-US "Assess the uniformity of the image using various\n"
+                                                              "grayscales. The brightness should be equally\n"
+                                                              "distributed across the entire image, and the image\n"
                                                               "shouldn't have any colorful areas.\n"
                                                               "\n"
                                                               "Gray tone: %d\n"
