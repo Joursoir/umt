@@ -55,7 +55,7 @@ GrayscaleTestTip (
 
   DrawRectWithBorder (Graphics,
                       15,
-                      Graphics->Height - 15 - 104,
+                      Graphics->Height - 15 - 134,
                       510, Graphics->Height - 15,
                       3,
                       &gUmtColors[UMT_COLOR_WHITE].Color,
@@ -63,16 +63,25 @@ GrayscaleTestTip (
 
   DrawHiiStringF (Graphics,
                   25,
-                  Graphics->Height - 15 - 94,
+                  Graphics->Height - 15 - 124,
                   &gUmtColors[UMT_COLOR_NAVY].Color,
                   STRING_TOKEN (STR_GRAYSCALE_TITLE), gUmtHiiHandle);
 
   DrawHiiStringF (Graphics,
                   25,
-                  Graphics->Height - 15 - 74,
+                  Graphics->Height - 15 - 104,
                   &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_GRAYSCALE_MSG), gUmtHiiHandle,
                   CurrentGrayTone);
+}
+
+VOID
+GrayscaleTestChangeParam (
+  IN  UMT_CONTEXT *Ctx,
+  IN  INT8        ParamStep
+)
+{
+
 }
 
 VOID
@@ -93,13 +102,4 @@ GrayscaleTestChangeValue (
   }
 
   GrayscaleTestInit (Ctx);
-}
-
-VOID
-GrayscaleTestChangeParam (
-  IN  UMT_CONTEXT *Ctx,
-  IN  INT8        ParamStep
-)
-{
-
 }
