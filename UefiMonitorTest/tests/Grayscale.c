@@ -56,7 +56,7 @@ GrayscaleTestTip (
   DrawRectWithBorder (Graphics,
                       15,
                       Graphics->Height - 15 - 134,
-                      510, Graphics->Height - 15,
+                      430, Graphics->Height - 15,
                       3,
                       &gUmtColors[UMT_COLOR_WHITE].Color,
                       &gUmtColors[UMT_COLOR_NAVY].Color);
