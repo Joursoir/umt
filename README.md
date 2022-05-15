@@ -11,7 +11,18 @@ A monitor diagnostic and testing tool. It includes several tests that should all
 
 ## Installation
 
-Coming soon...
+1. Move `UefiMonitorTest` directory to a desired EDK II *Package*
+
+2. Add the following line to *Package*.dsc, section "Components":
+
+```
+[Components]
+  ...
+  Package/UefiMonitorTest/UefiMonitorTest.inf
+  ..
+```
+
+That's all. You can compile the application.
 
 ## Usage
 
