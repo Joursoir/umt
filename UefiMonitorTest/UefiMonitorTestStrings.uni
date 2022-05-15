@@ -106,3 +106,14 @@
                                                               "shouldn't have any colorful areas.\n"
                                                               "\n"
                                                               "Gray tone: %d\n"
+
+//          Test "ChessBoard"
+
+#string STR_CHESSBOARD_TITLE                  #language en-US "CHESS BOARD"
+
+#string STR_CHESSBOARD_MSG                    #language en-US "Assess the uniformity of the image using various\n"
+                                                              "grayscales. The brightness should be equally\n"
+                                                              "distributed across the entire image, and the image\n"
+                                                              "shouldn't have any colorful areas.\n"
+                                                              "\n"
+                                                              "Side length: %d\n"
