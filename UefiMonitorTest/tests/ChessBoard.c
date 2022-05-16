@@ -13,43 +13,36 @@ ChessBoardTestInit (
 {
   UINT32 I;
   UINT32 J;
-  UINT32 ColorCell;
-  UINT32 FirstColorCell;
+  UINT32 ColorSquare;
+  UINT32 FirstColorSquare;
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  FirstColorCell = UMT_COLOR_WHITE;
+  FirstColorSquare = UMT_COLOR_WHITE;
 
   for (J = 0; J < Graphics->Height; J = J + CurrentSideLength)
   {
-    if (FirstColorCell == UMT_COLOR_WHITE)
+    if (FirstColorSquare == UMT_COLOR_WHITE)
     {
-      FirstColorCell = UMT_COLOR_BLACK;
-      ColorCell = UMT_COLOR_WHITE;
+      FirstColorSquare = UMT_COLOR_BLACK;
+      ColorSquare = UMT_COLOR_WHITE;
     } else {
-      FirstColorCell = UMT_COLOR_WHITE;
-      ColorCell = UMT_COLOR_BLACK;
+      FirstColorSquare = UMT_COLOR_WHITE;
+      ColorSquare = UMT_COLOR_BLACK;
     }
 
     for (I = 0; I < Graphics->Width; I = I + CurrentSideLength)
     {
-      if (ColorCell == UMT_COLOR_WHITE) {
-        PutRect (Graphics,
-                 I,
-                 J,
-                 I + CurrentSideLength,
-                 J + CurrentSideLength,
-                 &gUmtColors[UMT_COLOR_WHITE].Color);
+      PutRect (Graphics,
+               I,
+               J,
+               I + CurrentSideLength,
+               J + CurrentSideLength,
+               &gUmtColors[ColorSquare].Color);
 
-        ColorCell = UMT_COLOR_BLACK;
+      if (ColorSquare == UMT_COLOR_WHITE) {
+        ColorSquare = UMT_COLOR_BLACK;
       } else {
-        PutRect (Graphics,
-                 I,
-                 J,
-                 I + CurrentSideLength,
-                 J + CurrentSideLength,
-                 &gUmtColors[UMT_COLOR_BLACK].Color);
-
-        ColorCell = UMT_COLOR_WHITE;
+        ColorSquare = UMT_COLOR_WHITE;
       }
     }
   }
@@ -127,28 +120,14 @@ ChessBoardTestChangeValue (
   Width    = Ctx->Graphics->Width;
   ValueOut = CurrentSideLength;
 
-  if (ValueStep > 0) {
-    ValueOut++;
+  ValueOut += ValueStep;
 
-    while ((((Width / ValueOut) * ValueOut != Width) ||
-           ((Height / ValueOut) * ValueOut != Height)) &&
-           ((ValueOut < Height) && (ValueOut < Width)))
-    {
-      ValueOut++;
-    }
-  } else {
-    if (ValueOut == 1) {
-      return;
-    }
-
-    ValueOut--;
-
-    while ((((Width / ValueOut) * ValueOut != Width) ||
-           ((Height / ValueOut) * ValueOut != Height)) &&
-           (ValueOut > 1))
-    {
-      ValueOut--;
-    }
+  while   ((((Width / ValueOut) * ValueOut != Width) ||
+         ((Height / ValueOut) * ValueOut != Height)) &&
+         ((ValueOut < Height) && (ValueOut < Width)) &&
+         (ValueOut > 1))
+  {
+    ValueOut += ValueStep;
   }
 
     if ((ValueOut < Height) && (ValueOut < Width) && (ValueOut > 0))
