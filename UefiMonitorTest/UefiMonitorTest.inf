@@ -16,6 +16,7 @@
   tests/Grayscale.c
   tests/Gradients.c
   tests/ChessBoard.c
+  tests/ColorDistances.c
   UefiMonitorTestStrings.uni
 
 [Packages]
