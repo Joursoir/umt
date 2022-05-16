@@ -13,33 +13,34 @@ ChessBoardTestInit (
 {
   UINT32 I;
   UINT32 J;
-  UINT32 Flag;
-  UINT32 Flag_Color;
+  UINT32 ColorCell;
+  UINT32 FirstColorCell;
   GRAPHICS_CONTEXT *Graphics = Ctx->Graphics;
 
-  Flag_Color = 0;
+  FirstColorCell = UMT_COLOR_WHITE;
 
   for (J = 0; J < Graphics->Height; J = J + CurrentSideLength)
   {
-    if (Flag_Color == 0)
+    if (FirstColorCell == UMT_COLOR_WHITE)
     {
-      Flag_Color = 1;
-      Flag = 0;
+      FirstColorCell = UMT_COLOR_BLACK;
+      ColorCell = UMT_COLOR_WHITE;
     } else {
-      Flag_Color = 0;
-      Flag = 1;
+      FirstColorCell = UMT_COLOR_WHITE;
+      ColorCell = UMT_COLOR_BLACK;
     }
 
     for (I = 0; I < Graphics->Width; I = I + CurrentSideLength)
     {
-      if (Flag == 0) {
+      if (ColorCell == UMT_COLOR_WHITE) {
         PutRect (Graphics,
                  I,
                  J,
                  I + CurrentSideLength,
                  J + CurrentSideLength,
                  &gUmtColors[UMT_COLOR_WHITE].Color);
-        Flag = 1;
+
+        ColorCell = UMT_COLOR_BLACK;
       } else {
         PutRect (Graphics,
                  I,
@@ -47,10 +48,12 @@ ChessBoardTestInit (
                  I + CurrentSideLength,
                  J + CurrentSideLength,
                  &gUmtColors[UMT_COLOR_BLACK].Color);
-        Flag = 0;
+
+        ColorCell = UMT_COLOR_WHITE;
       }
     }
   }
+
   if (Ctx->ShowTip) {
     ChessBoardTestTip (Ctx);
   }
@@ -81,7 +84,7 @@ ChessBoardTestTip (
 
   DrawRectWithBorder (Graphics,
                       15,
-                      Graphics->Height - 15 - 134,
+                      Graphics->Height - 15 - 124,
                       430, Graphics->Height - 15,
                       3,
                       &gUmtColors[UMT_COLOR_WHITE].Color,
@@ -89,13 +92,13 @@ ChessBoardTestTip (
 
   DrawHiiStringF (Graphics,
                   25,
-                  Graphics->Height - 15 - 124,
+                  Graphics->Height - 15 - 114,
                   &gUmtColors[UMT_COLOR_NAVY].Color,
                   STRING_TOKEN (STR_CHESSBOARD_TITLE), gUmtHiiHandle);
 
   DrawHiiStringF (Graphics,
                   25,
-                  Graphics->Height - 15 - 104,
+                  Graphics->Height - 15 - 94,
                   &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_CHESSBOARD_MSG), gUmtHiiHandle,
                   CurrentSideLength);
@@ -147,6 +150,7 @@ ChessBoardTestChangeValue (
       ValueOut--;
     }
   }
+
     if ((ValueOut < Height) && (ValueOut < Width) && (ValueOut > 0))
     {
       CurrentSideLength = ValueOut;
