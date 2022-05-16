@@ -120,7 +120,7 @@ ChessBoardTestChangeValue (
   while ((((Width / ValueOut) * ValueOut != Width) ||
          ((Height / ValueOut) * ValueOut != Height)) &&
          ((ValueOut < Height) && (ValueOut < Width)) &&
-         (ValueOut > 2))
+         (ValueOut > 1))
   {
     ValueOut += ValueStep;
   }
