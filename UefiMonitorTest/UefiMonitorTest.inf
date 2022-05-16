@@ -16,6 +16,10 @@
   tests/Grayscale.c
   tests/Gradients.c
   tests/ChessBoard.c
+<<<<<<< HEAD
+=======
+  tests/MovingSquare.c
+>>>>>>> 803c28f (add Response Time test)
   UefiMonitorTestStrings.uni
 
 [Packages]
