@@ -106,3 +106,13 @@
                                                               "shouldn't have any colorful areas.\n"
                                                               "\n"
                                                               "Gray tone: %d\n"
+
+//          Test "Chess Board"
+
+#string STR_CHESSBOARD_TITLE                  #language en-US "CHESS BOARD"
+
+#string STR_CHESSBOARD_MSG                    #language en-US "Assess the effectiveness of the monitor to display\n"
+                                                              "objects with minimum and maximum brightness at the\n"
+                                                              "same time.\n"
+                                                              "\n"
+                                                              "Side length of a square: %d\n"
