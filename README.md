@@ -9,7 +9,7 @@ A monitor diagnostic and testing tool. It includes several tests that should all
 * Gradients
 * Chess board 
 
-## Installation
+## Compilation
 
 1. Move `UefiMonitorTest` directory to a desired EDK II *Package*
 
