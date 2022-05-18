@@ -24,6 +24,10 @@ A monitor diagnostic and testing tool. It includes several tests that should all
 
 That's all. You can compile the application.
 
+## Binary release
+
+Compiling programs for UEFI is not always convenient, especially for an application. Therefore, precompiled application is distributed. You can find binaries (for x86_64) at [joursoir.net/binaries/umt](http://joursoir.net/binaries/umt/).
+
 ## Usage
 
 Move the generated `UefiMonitorTest.efi` to some file system and run it via Uefi Shell:
