@@ -46,7 +46,7 @@ You can only use your keyboard to navigate through the application.
 - UP ARROW / DOWN ARROW: change the parameter
 - LEFT ARROW / RIGHT ARROW: change the value of the parameter
 - SPACE: show or hide all additional information
-- F1-F11: choose test test
+- F1-F11: choose the test
 - F12: open the monitor settings menu
 - ESC: end the test or exit from the application
 ```
