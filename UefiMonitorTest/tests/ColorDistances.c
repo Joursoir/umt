@@ -31,10 +31,10 @@ ColorDistancesTestInit (
 {
   GRAPHICS_CONTEXT *Graphics;
   UINT32 MinDimension;
-  STATIC UINT32 SquareWidth;
-  STATIC UINT32 SquareHeight;
-  STATIC UINT32 SquareX;
-  STATIC UINT32 SquareY;
+  UINT32 SquareWidth;
+  UINT32 SquareHeight;
+  UINT32 SquareX;
+  UINT32 SquareY;
   GRAPHICS_PIXEL_COLOR BackgroundColor;
   GRAPHICS_PIXEL_COLOR SquareColor;
 
@@ -76,16 +76,8 @@ ColorDistancesTestTip (
   )
 {
   GRAPHICS_CONTEXT *Graphics;
-  GRAPHICS_PIXEL_COLOR BackgroundColor;
-  GRAPHICS_PIXEL_COLOR SquareColor;
 
   Graphics = Ctx->Graphics;
-  BackgroundColor.Red   = mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_RED];
-  BackgroundColor.Green = mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_GREEN];
-  BackgroundColor.Blue  = mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE];
-  SquareColor.Red       = mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_RED];
-  SquareColor.Green     = mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_GREEN];
-  SquareColor.Blue      = mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_BLUE];
 
   if (Ctx->ShowTip == FALSE) {
     ColorDistancesTestInit (Ctx);
@@ -112,17 +104,17 @@ ColorDistancesTestTip (
                   &gUmtColors[UMT_COLOR_BLACK].Color,
                   STRING_TOKEN (STR_COLOR_DISTANCES_MSG), gUmtHiiHandle,
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_SQUARE_RED) ? L'*' : L' ',
-                  SquareColor.Red,
+                  mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_RED],
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_SQUARE_GREEN) ? L'*' : L' ',
-                  SquareColor.Green,
+                  mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_GREEN],
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_SQUARE_BLUE) ? L'*' : L' ',
-                  SquareColor.Blue,
+                  mColors[UMT_COLOR_DISTANCES_PARAM_SQUARE_BLUE],
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_BACKGROUND_RED) ? L'*' : L' ',
-                  BackgroundColor.Red,
+                  mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_RED],
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_BACKGROUND_GREEN) ? L'*' : L' ',
-                  BackgroundColor.Green,
+                  mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_GREEN],
                   (CurrentParam == UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE) ? L'*' : L' ',
-                  BackgroundColor.Blue);
+                  mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE]);
 }
 
 VOID
@@ -135,8 +127,7 @@ ColorDistancesTestChangeParam (
     CurrentParam = UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE;
   } else {
     CurrentParam += ParamStep;
-    if (CurrentParam > UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE)
-    {
+    if (CurrentParam > UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE) {
       CurrentParam = UMT_COLOR_DISTANCES_PARAM_SQUARE_RED;
     }
   }
