@@ -15,6 +15,7 @@
 #include <tests/Grayscale.h>
 #include "tests/Gradients.h"
 #include "tests/ChessBoard.h"
+#include "tests/ColorDistances.h"
 
 STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
@@ -22,7 +23,8 @@ STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
   { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue },
   { GrayscaleTestInit, GrayscaleTestDoit, GrayscaleTestTip, GrayscaleTestChangeParam, GrayscaleTestChangeValue },
   { GradientsTestInit, GradientsTestDoit, GradientsTestTip, GradientsTestChangeParam, GradientsTestChangeValue },
-  { ChessBoardTestInit, ChessBoardTestDoit, ChessBoardTestTip, ChessBoardTestChangeParam, ChessBoardTestChangeValue }
+  { ChessBoardTestInit, ChessBoardTestDoit, ChessBoardTestTip, ChessBoardTestChangeParam, ChessBoardTestChangeValue },
+  { ColorDistancesTestInit, ColorDistancesTestDoit, ColorDistancesTestTip, ColorDistancesTestChangeParam, ColorDistancesTestChangeValue}
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
