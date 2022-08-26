@@ -138,7 +138,7 @@
                                                               "Red%c: %d\n"
                                                               "Green%c: %d\n"
                                                               "Blue%c: %d\n"
-
+                                                              
 //          Test "Response Time"
 
 #string STR_MOVING_SQUARE_TITLE               #language en-US "RESPONSE TIME"
