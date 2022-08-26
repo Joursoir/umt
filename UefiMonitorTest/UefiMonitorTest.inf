@@ -17,6 +17,7 @@
   tests/Gradients.c
   tests/ChessBoard.c
   tests/ColorDistances.c
+  tests/MovingSquare.c
   UefiMonitorTestStrings.uni
 
 [Packages]

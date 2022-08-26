@@ -28,7 +28,7 @@
 #string STR_MM_SUBTITLE                       #language en-US "Let's choose the test you would like to carry out"
 
 #string STR_MM_MENU                           #language en-US "F1  Solid Colors        F5  Color Distances     F9  NONE\n"
-                                                              "F2  Grayscale           F6  NONE                F10 NONE\n"
+                                                              "F2  Grayscale           F6  Response Time       F10 NONE\n"
                                                               "F3  Gradients           F7  NONE                F11 NONE\n"
                                                               "F4  Chess board         F8  NONE                F12 Settings\n"
 
@@ -138,3 +138,11 @@
                                                               "Red%c: %d\n"
                                                               "Green%c: %d\n"
                                                               "Blue%c: %d\n"
+
+//          Test "Response Time"
+
+#string STR_MOVING_SQUARE_TITLE               #language en-US "RESPONSE TIME"
+
+#string STR_MOVING_SQUARE_MSG                 #language en-US "You can use this test to recognize the effects of your\n"
+                                                              "monitor various setting options, such as overdrive,\n"
+                                                              "refresh rates and blur reduction."
