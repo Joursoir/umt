@@ -108,12 +108,3 @@ SolidColorsTestChangeParam (
 {
   
 }
-
-VOID
-SolidColorsTestChangeVar (
-  IN  UMT_CONTEXT *Ctx,
-  IN  INT8        VariableStep // -1, +1
-  )
-{
-
-}
