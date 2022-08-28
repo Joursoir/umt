@@ -109,7 +109,7 @@ MainMenuChangeValue (
   
 }
 
-CONST UMT_STATE_ACTIONS gMainMenu = {
+CONST UI_ENTRY gMainMenu = {
   .Init         = MainMenuInit,
   .Doit         = MainMenuDoit,
   .Tip          = MainMenuTip,

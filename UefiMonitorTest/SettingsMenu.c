@@ -163,7 +163,7 @@ SettingsMenuChangeValue (
   gSettingsMenu.Init(Ctx);
 }
 
-CONST UMT_STATE_ACTIONS gSettingsMenu = {
+CONST UI_ENTRY gSettingsMenu = {
   .Init         = SettingsMenuInit,
   .Doit         = SettingsMenuDoit,
   .Tip          = SettingsMenuTip,

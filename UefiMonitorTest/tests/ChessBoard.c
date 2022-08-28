@@ -139,7 +139,7 @@ ChessBoardTestChangeValue (
   gChessBoardTest.Init(Ctx);
 }
 
-CONST UMT_STATE_ACTIONS gChessBoardTest = {
+CONST UI_ENTRY gChessBoardTest = {
   .Init         = ChessBoardTestInit,
   .Doit         = ChessBoardTestDoit,
   .Tip          = ChessBoardTestTip,

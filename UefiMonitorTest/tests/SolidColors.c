@@ -114,7 +114,7 @@ SolidColorsTestChangeParam (
   
 }
 
-CONST UMT_STATE_ACTIONS gSolidColorsTest = {
+CONST UI_ENTRY gSolidColorsTest = {
   .Init         = SolidColorsTestInit,
   .Doit         = SolidColorsTestDoit,
   .Tip          = SolidColorsTestTip,

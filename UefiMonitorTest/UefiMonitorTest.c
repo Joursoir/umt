@@ -10,7 +10,7 @@
 
 #include "UefiMonitorTest.h"
 
-STATIC CONST UMT_STATE_ACTIONS *mStateActions[UMT_STATE_END] = {
+STATIC CONST UI_ENTRY *mUiTable[UMT_STATE_END] = {
   &gMainMenu,
   &gSettingsMenu,
   &gSolidColorsTest,
@@ -122,8 +122,8 @@ ChangeCtxState (
 
   Ctx->State   = State;
   Ctx->ShowTip = FALSE;
-  Ctx->Actions = mStateActions[State];
-  Ctx->Actions->Init (Ctx);
+  Ctx->UI      = mUiTable[State];
+  Ctx->UI->Init (Ctx);
 }
 
 /**
@@ -153,19 +153,19 @@ HandleInput (
 
   switch (KeyData.Key.ScanCode) {
     case SCAN_UP:
-      Ctx->Actions->ChangeParam (Ctx, -1);
+      Ctx->UI->ChangeParam (Ctx, -1);
       break;
 
     case SCAN_DOWN:
-      Ctx->Actions->ChangeParam (Ctx, +1);
+      Ctx->UI->ChangeParam (Ctx, +1);
       break;
 
     case SCAN_RIGHT:
-      Ctx->Actions->ChangeValue (Ctx, +1);
+      Ctx->UI->ChangeValue (Ctx, +1);
       break;
 
     case SCAN_LEFT:
-      Ctx->Actions->ChangeValue (Ctx, -1);
+      Ctx->UI->ChangeValue (Ctx, -1);
       break;
 
     case SCAN_F1...SCAN_F11:
@@ -191,7 +191,7 @@ HandleInput (
 
   if (KeyData.Key.ScanCode == SCAN_NULL && KeyData.Key.UnicodeChar == L' ') {
     Ctx->ShowTip = !Ctx->ShowTip;
-    Ctx->Actions->Tip (Ctx);
+    Ctx->UI->Tip (Ctx);
   }
 }
 
@@ -211,7 +211,7 @@ Run (
   {
     HandleInput (&Ctx);
 
-    Ctx.Actions->Doit (&Ctx);
+    Ctx.UI->Doit (&Ctx);
 
     // Buffer swap:
     CopyMem (Graphics->FrontBuffer, Graphics->BackBuffer, Graphics->BufferSize);

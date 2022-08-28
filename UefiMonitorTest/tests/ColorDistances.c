@@ -151,7 +151,7 @@ ColorDistancesTestChangeValue (
   gColorDistancesTest.Init(Ctx);
 }
 
-CONST UMT_STATE_ACTIONS gColorDistancesTest = {
+CONST UI_ENTRY gColorDistancesTest = {
   .Init         = ColorDistancesTestInit,
   .Doit         = ColorDistancesTestDoit,
   .Tip          = ColorDistancesTestTip,

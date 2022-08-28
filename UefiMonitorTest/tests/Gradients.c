@@ -175,7 +175,7 @@ GradientsTestChangeParam (
   gGradientsTest.Init(Ctx);
 }
 
-CONST UMT_STATE_ACTIONS gGradientsTest = {
+CONST UI_ENTRY gGradientsTest = {
   .Init         = GradientsTestInit,
   .Doit         = GradientsTestDoit,
   .Tip          = GradientsTestTip,

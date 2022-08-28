@@ -109,7 +109,7 @@ GrayscaleTestChangeValue (
   gGrayscaleTest.Init(Ctx);
 }
 
-CONST UMT_STATE_ACTIONS gGrayscaleTest = {
+CONST UI_ENTRY gGrayscaleTest = {
   .Init         = GrayscaleTestInit,
   .Doit         = GrayscaleTestDoit,
   .Tip          = GrayscaleTestTip,
