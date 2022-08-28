@@ -37,4 +37,12 @@ struct _UMT_CONTEXT {
 
 extern EFI_HII_HANDLE gUmtHiiHandle;
 
+extern CONST UMT_STATE_ACTIONS gMainMenu;
+extern CONST UMT_STATE_ACTIONS gSettingsMenu;
+extern CONST UMT_STATE_ACTIONS gSolidColorsTest;
+extern CONST UMT_STATE_ACTIONS gGrayscaleTest;
+extern CONST UMT_STATE_ACTIONS gGradientsTest;
+extern CONST UMT_STATE_ACTIONS gChessBoardTest;
+extern CONST UMT_STATE_ACTIONS gColorDistancesTest;
+
 #endif /* UEFI_MONITOR_TEST_H */

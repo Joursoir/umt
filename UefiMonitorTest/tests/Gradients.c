@@ -2,7 +2,7 @@
 #include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
 
-#include "Gradients.h"
+#include "UefiMonitorTest.h"
 
 enum UMT_GRADIENTS_PARAM {
   UMT_GRADIENTS_PARAM_COLOR = 0,
@@ -27,6 +27,7 @@ CONST UINT32 mGradientsSteps[UMT_GRADIENTS_STEP_END] = {
   8, 16, 32, 64, 128, 256
 };
 
+STATIC
 VOID
 GradientsTestInit (
   IN UMT_CONTEXT *Ctx
@@ -55,10 +56,11 @@ GradientsTestInit (
   }
 
   if (Ctx->ShowTip) {
-    GradientsTestTip (Ctx);
+    gGradientsTest.Tip(Ctx);
   }
 }
 
+STATIC
 VOID
 GradientsTestDoit (
   IN UMT_CONTEXT *Ctx
@@ -67,6 +69,7 @@ GradientsTestDoit (
 
 }
 
+STATIC
 VOID
 GradientsTestTip (
   IN UMT_CONTEXT *Ctx
@@ -79,7 +82,7 @@ GradientsTestTip (
 
   if (Ctx->ShowTip == FALSE) {
     // Restore
-    GradientsTestInit (Ctx);
+    gGradientsTest.Init(Ctx);
     return;
   }
 
@@ -112,6 +115,7 @@ GradientsTestTip (
   FreePool (ColorMsg);
 }
 
+STATIC
 VOID
 GradientsTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -151,6 +155,7 @@ GradientsTestChangeValue (
   GradientsTestInit (Ctx);
 }
 
+STATIC
 VOID
 GradientsTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -167,5 +172,13 @@ GradientsTestChangeParam (
     }
   }
 
-  GradientsTestInit (Ctx);
+  gGradientsTest.Init(Ctx);
 }
+
+CONST UMT_STATE_ACTIONS gGradientsTest = {
+  .Init         = GradientsTestInit,
+  .Doit         = GradientsTestDoit,
+  .Tip          = GradientsTestTip,
+  .ChangeParam  = GradientsTestChangeParam,
+  .ChangeValue  = GradientsTestChangeValue,
+};

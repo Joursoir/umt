@@ -1,12 +1,13 @@
 #include <Library/HiiLib.h>
 
-#include "MainMenu.h"
+#include "UefiMonitorTest.h"
 
 #define INDENT            15
 #define CHAR_PER_COLUMN   24
 #define RECT_HALF_WIDTH   300
 #define RECT_HALF_HEIGHT  130
 
+STATIC
 VOID
 MainMenuInit (
   IN UMT_CONTEXT *Ctx
@@ -70,6 +71,7 @@ MainMenuInit (
 
 }
 
+STATIC
 VOID
 MainMenuDoit (
   IN UMT_CONTEXT *Ctx
@@ -78,6 +80,7 @@ MainMenuDoit (
 
 }
 
+STATIC
 VOID
 MainMenuTip (
   IN UMT_CONTEXT *Ctx
@@ -86,6 +89,7 @@ MainMenuTip (
   
 }
 
+STATIC
 VOID
 MainMenuChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -95,6 +99,7 @@ MainMenuChangeParam (
   
 }
 
+STATIC
 VOID
 MainMenuChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -103,3 +108,11 @@ MainMenuChangeValue (
 {
   
 }
+
+CONST UMT_STATE_ACTIONS gMainMenu = {
+  .Init         = MainMenuInit,
+  .Doit         = MainMenuDoit,
+  .Tip          = MainMenuTip,
+  .ChangeParam  = MainMenuChangeParam,
+  .ChangeValue  = MainMenuChangeValue,
+};

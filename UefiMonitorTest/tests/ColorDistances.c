@@ -1,7 +1,8 @@
-#include "ColorDistances.h"
 #include <Uefi.h>
 #include <Library/UefiRuntimeServicesTableLib.h>
 #include <Library/UefiBootServicesTableLib.h>
+
+#include "UefiMonitorTest.h"
 
 enum UMT_COLOR_DISTANCES_PARAM {
   UMT_COLOR_DISTANCES_PARAM_SQUARE_RED = 0,
@@ -23,6 +24,7 @@ STATIC UINT8 mColors[UMT_COLOR_DISTANCES_PARAM_END] = {
   0
 };
 
+STATIC
 VOID
 ColorDistancesTestInit (
   IN UMT_CONTEXT *Ctx
@@ -60,15 +62,17 @@ ColorDistancesTestInit (
            &SquareColor);
 
   if (Ctx->ShowTip) {
-    ColorDistancesTestTip(Ctx);
+    gColorDistancesTest.Tip(Ctx);
   }
 }
 
+STATIC
 VOID
 ColorDistancesTestDoit (
   IN UMT_CONTEXT *Ctx
   ) {}
 
+STATIC
 VOID
 ColorDistancesTestTip (
   IN UMT_CONTEXT *Ctx
@@ -79,7 +83,7 @@ ColorDistancesTestTip (
   Graphics = Ctx->Graphics;
 
   if (Ctx->ShowTip == FALSE) {
-    ColorDistancesTestInit (Ctx);
+    gColorDistancesTest.Init(Ctx);
     return;
   }
 
@@ -116,6 +120,7 @@ ColorDistancesTestTip (
                   mColors[UMT_COLOR_DISTANCES_PARAM_BACKGROUND_BLUE]);
 }
 
+STATIC
 VOID
 ColorDistancesTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -131,9 +136,10 @@ ColorDistancesTestChangeParam (
     }
   }
 
-  ColorDistancesTestInit (Ctx);
+  gColorDistancesTest.Init(Ctx);
 }
 
+STATIC
 VOID
 ColorDistancesTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -142,5 +148,13 @@ ColorDistancesTestChangeValue (
 {
   mColors[CurrentParam] = MAX(0, MIN(255, mColors[CurrentParam] + ValueStep));
 
-  ColorDistancesTestInit (Ctx);
+  gColorDistancesTest.Init(Ctx);
 }
+
+CONST UMT_STATE_ACTIONS gColorDistancesTest = {
+  .Init         = ColorDistancesTestInit,
+  .Doit         = ColorDistancesTestDoit,
+  .Tip          = ColorDistancesTestTip,
+  .ChangeParam  = ColorDistancesTestChangeParam,
+  .ChangeValue  = ColorDistancesTestChangeValue,
+};

@@ -2,10 +2,11 @@
 #include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
 
-#include "tests/ChessBoard.h"
+#include "UefiMonitorTest.h"
 
 STATIC UINT32 CurrentSideLength = 1;
 
+STATIC
 VOID
 ChessBoardTestInit (
   IN UMT_CONTEXT *Ctx
@@ -41,10 +42,11 @@ ChessBoardTestInit (
   }
 
   if (Ctx->ShowTip) {
-    ChessBoardTestTip (Ctx);
+    gChessBoardTest.Tip(Ctx);
   }
 }
 
+STATIC
 VOID
 ChessBoardTestDoit (
   IN UMT_CONTEXT *Ctx
@@ -53,6 +55,7 @@ ChessBoardTestDoit (
 
 }
 
+STATIC
 VOID
 ChessBoardTestTip (
   IN UMT_CONTEXT *Ctx
@@ -64,7 +67,7 @@ ChessBoardTestTip (
 
   if (Ctx->ShowTip == FALSE) {
     // Restore
-    ChessBoardTestInit (Ctx);
+    gChessBoardTest.Init(Ctx);
     return;
   }
 
@@ -90,6 +93,7 @@ ChessBoardTestTip (
                   CurrentSideLength);
 }
 
+STATIC
 VOID
 ChessBoardTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -99,6 +103,7 @@ ChessBoardTestChangeParam (
 
 }
 
+STATIC
 VOID
 ChessBoardTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -131,5 +136,13 @@ ChessBoardTestChangeValue (
   }
 
   CurrentSideLength = ValueOut;
-  ChessBoardTestInit (Ctx);
+  gChessBoardTest.Init(Ctx);
 }
+
+CONST UMT_STATE_ACTIONS gChessBoardTest = {
+  .Init         = ChessBoardTestInit,
+  .Doit         = ChessBoardTestDoit,
+  .Tip          = ChessBoardTestTip,
+  .ChangeParam  = ChessBoardTestChangeParam,
+  .ChangeValue  = ChessBoardTestChangeValue,
+};
