@@ -9,11 +9,11 @@
 typedef struct _UMT_CONTEXT UMT_CONTEXT;
 
 typedef struct {
-  VOID (*Init)(UMT_CONTEXT *);
-  VOID (*Doit)(UMT_CONTEXT *);
-  VOID (*Tip)(UMT_CONTEXT *);
-  VOID (*ChangeParam)(UMT_CONTEXT *, INT8);
-  VOID (*ChangeValue)(UMT_CONTEXT *, INT8);
+  VOID (*Init)         (UMT_CONTEXT *Ctx);
+  VOID (*Doit)         (UMT_CONTEXT *Ctx);
+  VOID (*Tip)          (UMT_CONTEXT *Ctx);
+  VOID (*ChangeParam)  (UMT_CONTEXT *Ctx, INT8 ParamStep);
+  VOID (*ChangeValue)  (UMT_CONTEXT *Ctx, INT8 ValueStep);
 } UMT_STATE_ACTIONS;
 
 enum UMT_STATE {
