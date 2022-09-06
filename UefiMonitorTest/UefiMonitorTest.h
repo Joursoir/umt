@@ -24,6 +24,7 @@ enum UMT_STATE {
   UMT_STATE_GRADIENTS_TEST,
   UMT_STATE_CHESSBOARD_TEST,
   UMT_STATE_COLOR_DISTANCES_TEST,
+  UMT_STATE_RESPONSE_TIME_TEST,
   UMT_STATE_END
 };
 
@@ -44,5 +45,6 @@ extern CONST UI_ENTRY gGrayscaleTest;
 extern CONST UI_ENTRY gGradientsTest;
 extern CONST UI_ENTRY gChessBoardTest;
 extern CONST UI_ENTRY gColorDistancesTest;
+extern CONST UI_ENTRY gResponseTimeTest;
 
 #endif /* UEFI_MONITOR_TEST_H */

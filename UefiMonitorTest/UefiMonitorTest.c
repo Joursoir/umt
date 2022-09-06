@@ -18,6 +18,7 @@ STATIC CONST UI_ENTRY *mUiTable[UMT_STATE_END] = {
   &gGradientsTest,
   &gChessBoardTest,
   &gColorDistancesTest,
+  &gResponseTimeTest,
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
