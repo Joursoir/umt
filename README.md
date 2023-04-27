@@ -26,7 +26,7 @@ That's all. You can compile the application.
 
 ## Binary release
 
-Compiling programs for UEFI is not always convenient, especially for an application. Therefore, precompiled application is distributed. You can find binaries (for x86_64) at [joursoir.net/binaries/umt](http://joursoir.net/binaries/umt/).
+Compiling programs for UEFI is not always convenient, especially for an application. Therefore, precompiled application is distributed. You can find binaries (for x86_64) at [joursoir.net/storage/binaries/umt](http://joursoir.net/storage/binaries/umt/).
 
 ## Usage
 
