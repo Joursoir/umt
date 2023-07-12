@@ -1,7 +1,7 @@
 #include <Library/DebugLib.h>
 #include <Library/MemoryAllocationLib.h>
 
-#include "SettingsMenu.h"
+#include "UefiMonitorTest.h"
 
 #define INDENT            15
 #define RECT_HALF_WIDTH   160
@@ -52,6 +52,7 @@ GetGraphicsModeInfo (
   return ModeInfo;
 }
 
+STATIC
 VOID
 SettingsMenuInit (
   IN UMT_CONTEXT *Ctx
@@ -110,6 +111,7 @@ SettingsMenuInit (
   FreePool (ModeInfo);
 }
 
+STATIC
 VOID
 SettingsMenuDoit (
   IN UMT_CONTEXT *Ctx
@@ -118,6 +120,7 @@ SettingsMenuDoit (
 
 }
 
+STATIC
 VOID
 SettingsMenuTip (
   IN UMT_CONTEXT *Ctx
@@ -129,9 +132,10 @@ SettingsMenuTip (
   if (EFI_ERROR(Status))
     return;
 
-  SettingsMenuInit (Ctx); 
+  gSettingsMenu.Init(Ctx);
 }
 
+STATIC
 VOID
 SettingsChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -141,6 +145,7 @@ SettingsChangeParam (
   
 }
 
+STATIC
 VOID
 SettingsMenuChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -155,5 +160,13 @@ SettingsMenuChangeValue (
       mModeNumber = 0;
   }
 
-  SettingsMenuInit (Ctx); 
+  gSettingsMenu.Init(Ctx);
 }
+
+CONST UI_ENTRY gSettingsMenu = {
+  .Init         = SettingsMenuInit,
+  .Doit         = SettingsMenuDoit,
+  .Tip          = SettingsMenuTip,
+  .ChangeParam  = SettingsChangeParam,
+  .ChangeValue  = SettingsMenuChangeValue,
+};

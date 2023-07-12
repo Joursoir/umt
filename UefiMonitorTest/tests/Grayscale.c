@@ -2,10 +2,11 @@
 #include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
 
-#include "Grayscale.h"
+#include "UefiMonitorTest.h"
 
 STATIC UINT32 CurrentGrayTone = 50;
 
+STATIC
 VOID
 GrayscaleTestInit (
   IN UMT_CONTEXT *Ctx
@@ -26,10 +27,11 @@ GrayscaleTestInit (
            &ColorOutput);
 
   if (Ctx->ShowTip) {
-    GrayscaleTestTip (Ctx);
+    gGrayscaleTest.Tip(Ctx);
   }
 }
 
+STATIC
 VOID
 GrayscaleTestDoit (
   IN UMT_CONTEXT *Ctx
@@ -38,6 +40,7 @@ GrayscaleTestDoit (
 
 }
 
+STATIC
 VOID
 GrayscaleTestTip (
   IN UMT_CONTEXT *Ctx
@@ -49,7 +52,7 @@ GrayscaleTestTip (
 
   if (Ctx->ShowTip == FALSE) {
     // Restore
-    GrayscaleTestInit (Ctx);
+    gGrayscaleTest.Init(Ctx);
     return;
   }
 
@@ -75,6 +78,7 @@ GrayscaleTestTip (
                   CurrentGrayTone);
 }
 
+STATIC
 VOID
 GrayscaleTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -84,6 +88,7 @@ GrayscaleTestChangeParam (
 
 }
 
+STATIC
 VOID
 GrayscaleTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -101,5 +106,13 @@ GrayscaleTestChangeValue (
     }
   }
 
-  GrayscaleTestInit (Ctx);
+  gGrayscaleTest.Init(Ctx);
 }
+
+CONST UI_ENTRY gGrayscaleTest = {
+  .Init         = GrayscaleTestInit,
+  .Doit         = GrayscaleTestDoit,
+  .Tip          = GrayscaleTestTip,
+  .ChangeParam  = GrayscaleTestChangeParam,
+  .ChangeValue  = GrayscaleTestChangeValue,
+};

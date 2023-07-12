@@ -2,10 +2,11 @@
 #include <Library/HiiLib.h>
 #include <Library/MemoryAllocationLib.h>
 
-#include "SolidColors.h"
+#include "UefiMonitorTest.h"
 
 STATIC enum UMT_COLORS CurrentColor = 0;
 
+STATIC
 VOID
 SolidColorsTestInit (
   IN UMT_CONTEXT *Ctx
@@ -15,9 +16,10 @@ SolidColorsTestInit (
 
   PutRect (Graphics, 0, 0, Graphics->Width, Graphics->Height, &gUmtColors[CurrentColor].Color);
   if (Ctx->ShowTip)
-    SolidColorsTestTip (Ctx);
+    gSolidColorsTest.Tip(Ctx);
 } 
 
+STATIC
 VOID
 SolidColorsTestDoit (
   IN UMT_CONTEXT *Ctx
@@ -26,6 +28,7 @@ SolidColorsTestDoit (
 
 }
 
+STATIC
 VOID
 SolidColorsTestTip (
   IN UMT_CONTEXT *Ctx
@@ -83,6 +86,7 @@ SolidColorsTestTip (
   FreePool (Msg);
 }
 
+STATIC
 VOID
 SolidColorsTestChangeValue (
   IN  UMT_CONTEXT *Ctx,
@@ -97,9 +101,10 @@ SolidColorsTestChangeValue (
       CurrentColor = 0;
   }
 
-  SolidColorsTestInit (Ctx);
+  gSolidColorsTest.Init(Ctx);
 }
 
+STATIC
 VOID
 SolidColorsTestChangeParam (
   IN  UMT_CONTEXT *Ctx,
@@ -109,11 +114,10 @@ SolidColorsTestChangeParam (
   
 }
 
-VOID
-SolidColorsTestChangeVar (
-  IN  UMT_CONTEXT *Ctx,
-  IN  INT8        VariableStep // -1, +1
-  )
-{
-
-}
+CONST UI_ENTRY gSolidColorsTest = {
+  .Init         = SolidColorsTestInit,
+  .Doit         = SolidColorsTestDoit,
+  .Tip          = SolidColorsTestTip,
+  .ChangeParam  = SolidColorsTestChangeParam,
+  .ChangeValue  = SolidColorsTestChangeValue,
+};

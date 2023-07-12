@@ -9,20 +9,16 @@
 #include <Library/UefiHiiServicesLib.h>
 
 #include "UefiMonitorTest.h"
-#include "MainMenu.h"
-#include "SettingsMenu.h"
-#include "tests/SolidColors.h"
-#include <tests/Grayscale.h>
-#include "tests/Gradients.h"
-#include "tests/ChessBoard.h"
 
-STATIC CONST UMT_STATE_ACTIONS mStateActions[UMT_STATE_END] = {
-  { MainMenuInit, MainMenuDoit, MainMenuTip, MainMenuChangeParam, MainMenuChangeValue },
-  { SettingsMenuInit, SettingsMenuDoit, SettingsMenuTip, SettingsChangeParam, SettingsMenuChangeValue },
-  { SolidColorsTestInit, SolidColorsTestDoit, SolidColorsTestTip, SolidColorsTestChangeParam, SolidColorsTestChangeValue },
-  { GrayscaleTestInit, GrayscaleTestDoit, GrayscaleTestTip, GrayscaleTestChangeParam, GrayscaleTestChangeValue },
-  { GradientsTestInit, GradientsTestDoit, GradientsTestTip, GradientsTestChangeParam, GradientsTestChangeValue },
-  { ChessBoardTestInit, ChessBoardTestDoit, ChessBoardTestTip, ChessBoardTestChangeParam, ChessBoardTestChangeValue }
+STATIC CONST UI_ENTRY *mUiTable[UMT_STATE_END] = {
+  &gMainMenu,
+  &gSettingsMenu,
+  &gSolidColorsTest,
+  &gGrayscaleTest,
+  &gGradientsTest,
+  &gChessBoardTest,
+  &gColorDistancesTest,
+  &gResponseTimeTest,
 };
 
 EFI_HII_HANDLE gUmtHiiHandle = NULL;
@@ -127,8 +123,8 @@ ChangeCtxState (
 
   Ctx->State   = State;
   Ctx->ShowTip = FALSE;
-  Ctx->Actions = &mStateActions[State];
-  Ctx->Actions->Init (Ctx);
+  Ctx->UI      = mUiTable[State];
+  Ctx->UI->Init (Ctx);
 }
 
 /**
@@ -158,19 +154,19 @@ HandleInput (
 
   switch (KeyData.Key.ScanCode) {
     case SCAN_UP:
-      Ctx->Actions->ChangeParam (Ctx, -1);
+      Ctx->UI->ChangeParam (Ctx, -1);
       break;
 
     case SCAN_DOWN:
-      Ctx->Actions->ChangeParam (Ctx, +1);
+      Ctx->UI->ChangeParam (Ctx, +1);
       break;
 
     case SCAN_RIGHT:
-      Ctx->Actions->ChangeValue (Ctx, +1);
+      Ctx->UI->ChangeValue (Ctx, +1);
       break;
 
     case SCAN_LEFT:
-      Ctx->Actions->ChangeValue (Ctx, -1);
+      Ctx->UI->ChangeValue (Ctx, -1);
       break;
 
     case SCAN_F1...SCAN_F11:
@@ -196,7 +192,7 @@ HandleInput (
 
   if (KeyData.Key.ScanCode == SCAN_NULL && KeyData.Key.UnicodeChar == L' ') {
     Ctx->ShowTip = !Ctx->ShowTip;
-    Ctx->Actions->Tip (Ctx);
+    Ctx->UI->Tip (Ctx);
   }
 }
 
@@ -216,7 +212,7 @@ Run (
   {
     HandleInput (&Ctx);
 
-    Ctx.Actions->Doit (&Ctx);
+    Ctx.UI->Doit (&Ctx);
 
     // Buffer swap:
     CopyMem (Graphics->FrontBuffer, Graphics->BackBuffer, Graphics->BufferSize);
